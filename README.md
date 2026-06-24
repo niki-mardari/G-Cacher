@@ -10,7 +10,7 @@ Szymon Blazejowski
 ## About the project:
 The team has to use the studied technologies and create a useful project for the event.
 
-Posisble ideas: 
+Possible ideas: 
 1. Portable Satellite signal quality device
 2. Precise object location saving 
 3. Vehicle Tracker 
