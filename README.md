@@ -1,11 +1,11 @@
 # This is a shared repository that Team 10 will use to work on their BIP26 programme project. 
 
 ## Members/ Contributors:
-Andrei-Eduard Rusu
-Carla Daniela Zegarra Bernabe
-Niki Mardari
-Rokas Mileris
-Szymon Blazejowski
+Andrei-Eduard Rusu, 
+Carla Daniela Zegarra Bernabe, 
+Niki Mardari, 
+Rokas Mileris, 
+Szymon Blazejowski. 
 
 ## About the project:
 The team has to use the studied technologies and create a useful project for the event.
