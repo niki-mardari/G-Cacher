@@ -44,6 +44,7 @@ Use the learning portal to explore GNSS, NMEA, satellite signals, and project pr
 ## Current Progress
 
 * Learning about GNSS and NMEA
+* Hardware Design
 * Brainstorming cool ideas 😎
 
 ---
