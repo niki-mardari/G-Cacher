@@ -33,7 +33,8 @@ The team will use the studied hardware and technologies to create a useful proje
 1. Portable satellite signal quality device
 2. Precise object location saving system
 3. Vehicle tracker
-4. More ideas coming soon...
+4. 3D Satellite Terrain modelling
+5. GeoCache
 
 ## Learning Portal / Wiki
 
@@ -44,7 +45,7 @@ Use the learning portal to explore GNSS, NMEA, satellite signals, and project pr
 ## Current Progress
 
 * Learning about GNSS and NMEA
-* Hardware Design
-* Brainstorming cool ideas 😎
+* Repairing wiring in current design
+* Trying cool ideas 😎
 
 ---
