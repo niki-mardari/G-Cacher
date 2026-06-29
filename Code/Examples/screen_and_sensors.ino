@@ -50,6 +50,7 @@
 #include <Adafruit_BMP280.h>
 
 #include "ImuDrv.hpp"   // Newer SensorLib QMI8658 driver
+// Donwload here: https://github.com/lewisxhe/SensorLib/tree/master
 
 // -------------------- TFT DISPLAY PINS --------------------
 
