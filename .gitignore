@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Node / frontend
+node_modules/
+dist/
+build/
+
+# Arduino
+*.bin
+*.elf
+*.map
+
+# System files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
