@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SatCache — Live GNSS Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>SatCache</h1>
+    <span class="tag">TenStar ESP32-S3 × LC29H · live GNSS dashboard</span>
+    <nav>
+      <a href="index.html">Dashboard</a>
+      <a href="terrain.html">3D Route</a>
+      <a href="http://localhost:8000/docs" target="_blank" rel="noreferrer">API Docs</a>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <section id="map"></section>
+
+    <aside class="panel">
+      <section class="card hint-card">
+        <div class="label">Current command</div>
+        <div class="riddle" id="commandTitle">Waiting for telemetry...</div>
+        <div class="progress" id="commandMessage">Start the backend and send telemetry from the ESP32-S3 or use map-click simulation.</div>
+      </section>
+
+      <section>
+        <h2>Device signal</h2>
+        <div class="device" id="device">
+          <div class="sig-label">No live reading yet</div>
+          <div class="sig-main" id="sigMain">—</div>
+          <div class="sig-sub" id="sigSub">The dashboard refreshes every 3 seconds.</div>
+        </div>
+      </section>
+
+      <section class="button-grid">
+        <button id="simulateBtn">Send simulated telemetry from map click</button>
+        <button id="clearBtn" class="secondary">Clear telemetry log</button>
+      </section>
+
+      <p class="hint-box">
+        Click the map to choose a simulated position, then press the simulate button. The real ESP32-S3 sends the same type of JSON to <code>/api/telemetry</code>.
+      </p>
+
+      <section class="info-grid">
+        <div><span>Latest lat/lon</span><b id="latestLatLon">—</b></div>
+        <div><span>Satellites</span><b id="latestSats">—</b></div>
+        <div><span>HDOP</span><b id="latestHdop">—</b></div>
+        <div><span>Distance</span><b id="latestDistance">—</b></div>
+      </section>
+
+      <section class="log-section">
+        <h2>Telemetry log</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Time</th>
+                <th>Lat</th>
+                <th>Lon</th>
+                <th>Sats</th>
+                <th>HDOP</th>
+                <th>Command</th>
+              </tr>
+            </thead>
+            <tbody id="logBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,1 +1,0 @@
-# This is the database implementation for storing the data from the microcontroller device
