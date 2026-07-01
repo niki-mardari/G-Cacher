@@ -17,6 +17,10 @@ On smartphone:
 ```text
 http://10.107.7.42:3000/index.html
 ```
+Note: The ip ipv4 address changes so need to check the laptop ip address using:
+```text
+hostname -i
+```
 
 The browser dashboard is available at:
 
