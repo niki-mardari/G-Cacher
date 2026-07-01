@@ -1,3 +1,11 @@
+# Issues for now 
+- Add location saving section
+- Make sure docker works on everyones laptop
+- Add good documentaion
+- Make ping eco on map when showing current location
+- Buttons in menu are too small 
+- Call the website sommething else like GeoCacher Portal
+
 # SatCache Web Stack
 
 This folder contains the web part of the Tenstar ESP32-S3 GNSS project.
