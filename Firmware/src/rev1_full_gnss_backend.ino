@@ -23,11 +23,12 @@
 // Current Issues:
 /*
 1. Gets stuck in connecting to wifi due to polling
-2. Touch becomes unrepsonsive
+2. Touch becomes unrepsonsive need non blocking functions 
 3. Need RTOS or scheduler for each function
 4. Slow uploads 
 5. Needs Testing!
 6. Need to make menu for GeoCache to change the screen color and give hints 
+The menu should be an option instead of 
 */
 
 #define LGFX_USE_V1
