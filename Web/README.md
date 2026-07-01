@@ -1,166 +1,192 @@
-# Issues for now 
-- Add location saving section
-- Make sure docker works on everyones laptop
-- Add good documentaion
-- Make ping eco on map when showing current location
-- Buttons in menu are too small 
-- Call the website sommething else like GeoCacher Portal
+# Sat Cacher Web Server
 
-# SatCache Web Stack
+This folder contains the web part of the Sat Cacher project.
 
-This folder contains the web part of the Tenstar ESP32-S3 GNSS project.
+It runs three containers:
 
-It runs three services with Docker Compose:
+- **frontend**: the website served by Nginx on port `3000`
+- **backend**: the FastAPI API on port `8000`
+- **db**: PostgreSQL database on port `5432`
 
-- `frontend`: static HTML/CSS/JS dashboard served by Nginx on port `3000`
-- `backend`: FastAPI API on port `8000`
-- `db`: PostgreSQL database on port `5432`
+The ESP32-S3 sends GNSS telemetry to the backend. The backend stores it and returns the current geocache command. The website shows the map, route, saved locations, and the 3D viewer.
 
-The ESP32-S3 uploads telemetry to:
+## Folder layout
 
 ```text
-http://YOUR_LAPTOP_IP:8000/api/telemetry
-```
-On smartphone:
-```text
-http://10.107.7.42:3000/index.html
-```
-Note: The ip ipv4 address changes so need to check the laptop ip address using:
-```text
-hostname -i
-```
-
-The browser dashboard is available at:
-
-```text
-http://localhost:3000
-```
-
-The FastAPI docs are available at:
-
-```text
-http://localhost:8000/docs
+Web/
+├── backend/
+│   ├── app/main.py          # FastAPI backend
+│   ├── Dockerfile
+│   └── requirements.txt
+├── database/
+│   └── init.sql             # notes for database setup
+├── frontend/
+│   ├── index.html           # main Sat Cacher dashboard
+│   ├── terrain.html         # new 3D viewer
+│   ├── css/
+│   ├── js/
+│   └── prototypes/          # older experiments and backups
+├── scripts/
+├── docker-compose.yml
+└── README.md
 ```
 
-## Run locally
+## How to run it
 
-From this `Web` folder:
+From the `Web` folder:
 
 ```bash
 docker compose up --build
 ```
 
-Or:
+If Docker on Linux needs sudo:
 
 ```bash
-./scripts/start.sh
+sudo docker compose up --build
 ```
 
-Stop:
+Run in the background:
+
+```bash
+docker compose up --build -d
+```
+
+Stop everything:
 
 ```bash
 docker compose down
 ```
 
-Delete local database data:
+Reset the database:
 
 ```bash
-./scripts/reset-db.sh
+docker compose down -v
+docker compose up --build
 ```
 
-## Test the backend with curl
+Only use `down -v` when you are okay deleting the local database data.
+
+## Main links
+
+On the same laptop:
+
+```text
+Website:       http://localhost:3000
+3D viewer:     http://localhost:3000/terrain.html
+API docs:      http://localhost:8000/docs
+Latest point:  http://localhost:8000/api/latest
+Track points:  http://localhost:8000/api/track
+Saved spots:   http://localhost:8000/api/assets
+```
+
+From a phone on the same network, replace `localhost` with the laptop IP, for example:
+
+```text
+http://10.107.7.42:3000
+http://10.107.7.42:8000/docs
+```
+
+## ESP32-S3 upload URL
+
+In the firmware, the ESP32 should post to:
+
+```text
+http://LAPTOP_IP:8000/api/telemetry
+```
+
+Example for my laptop:
+
+```text
+http://10.107.7.42:8000/api/telemetry
+```
+
+Do not use `localhost` in the ESP32 firmware because `localhost` would mean the ESP32 itself.
+
+## What the backend does
+
+The backend creates the database tables on startup if they do not already exist.
+
+It stores:
+
+- telemetry points from the ESP32
+- geocache landmark locations
+- saved marked locations/assets
+
+The geocache destinations include famous Irish landmarks and TU Dublin Tallaght. When telemetry arrives, the backend checks the closest active landmark and sends a command back to the ESP32.
+
+## Useful API endpoints
+
+```text
+GET     /api/health
+GET     /api/locations
+POST    /api/telemetry
+GET     /api/latest
+GET     /api/track?limit=1000
+GET     /api/points?limit=1000
+GET     /api/log?limit=500
+GET     /api/assets
+POST    /api/assets
+PATCH   /api/assets/{asset_id}
+DELETE  /api/assets/{asset_id}
+DELETE  /api/dev/clear-telemetry
+```
+
+## Testing without the ESP32
+
+Click on the map in the dashboard, then press **Send simulated telemetry**.
+
+Or use curl:
 
 ```bash
-curl -X POST "http://127.0.0.1:8000/api/telemetry" \
+curl -X POST "http://localhost:8000/api/telemetry" \
   -H "Content-Type: application/json" \
   -d '{
-    "device_id": "tenstar_001",
+    "device_id": "browser_test",
     "mode": "geocache",
-    "lat": 53.349805,
-    "lon": -6.260310,
-    "alt_m": 40.5,
-    "speed_kmph": 2.1,
+    "lat": 53.2911,
+    "lon": -6.3630,
+    "alt_m": 100.0,
+    "speed_kmph": 1.0,
     "satellites": 35,
     "hdop": 0.8,
     "fix": true,
-    "temperature_c": 39.8,
-    "pressure_hpa": 1012.4,
+    "temperature_c": 31.0,
+    "pressure_hpa": 1012.0,
     "acc_x": 0.1,
     "acc_y": 0.0,
     "acc_z": 9.8
   }'
 ```
 
-Then check:
+Then open:
 
 ```text
 http://localhost:8000/api/latest
-http://localhost:8000/api/track
 http://localhost:3000
 ```
 
-## ESP32-S3 upload URL
+## Saved locations
 
-Find your laptop IP:
+The ESP32 firmware can save a marked location by posting to `/api/assets`.
 
-```bash
-hostname -I
-```
+The dashboard also has a **Save latest GNSS point** button. After saving, locations appear on the Leaflet map and can be renamed/tagged in the Saved Locations section.
 
-Example result:
+Example uses:
 
-```text
-192.168.1.42
-```
+- car parked location
+- pipe or valve in the ground
+- construction marker
+- survey point
+- cable route marker
 
-The ESP32-S3 Arduino sketch should use:
+## 3D viewer
 
-```cpp
-const char *serverUrl = "http://192.168.1.42:8000/api/telemetry";
-```
+The new `3D_Modelling_Test_Sample.html` prototype has replaced `frontend/terrain.html`.
 
-Do not use `127.0.0.1` or `localhost` on the ESP32, because that would mean the ESP32 itself.
-
-## Useful endpoints
-
-| Endpoint | Purpose |
-|---|---|
-| `GET /` | API info |
-| `GET /api/health` | Health check |
-| `POST /api/telemetry` | ESP32-S3 upload endpoint |
-| `GET /api/latest` | Latest telemetry row |
-| `GET /api/log?limit=500` | Full log, newest first |
-| `GET /api/track?limit=1000` | Track points, oldest first for map drawing |
-| `GET /api/locations` | Geocache locations |
-| `POST /api/assets` | Save pipe/object/infrastructure location |
-| `GET /api/assets` | View saved assets |
-
-## Folder structure
+The old `terrain.html` was moved to:
 
 ```text
-Web/
-├── backend/
-│   ├── app/
-│   │   └── main.py
-│   ├── Dockerfile
-│   └── requirements.txt
-├── frontend/
-│   ├── index.html
-│   ├── terrain.html
-│   ├── css/
-│   ├── js/
-│   └── prototypes/
-├── database/
-│   └── init.sql
-├── scripts/
-├── docker-compose.yml
-├── .env.example
-└── README.md
+frontend/prototypes/terrain-original.html
 ```
 
-## Notes
-
-- The dashboard can simulate telemetry by clicking the map and pressing the simulate button.
-- Real ESP32-S3 uploads appear automatically on the map and in the log table.
-- `terrain.html` shows a simple 3D route based on `/api/track`.
-- The `prototypes/` folder keeps earlier standalone HTML experiments.
+The new 3D viewer automatically uses the current host name, so it should work from either the laptop or another device on the same network.

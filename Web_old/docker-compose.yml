@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: satcache_user
       POSTGRES_PASSWORD: satcache_password
     ports:
-      - "0.0.0.0:5432:5432"
+      - "5432:5432"
     volumes:
       - satcache_postgres_data:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
@@ -24,7 +24,7 @@ services:
     environment:
       DATABASE_URL: postgresql://satcache_user:satcache_password@db:5432/satcache_db
     ports:
-      - "0.0.0.0:8000:8000"
+      - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
@@ -36,7 +36,7 @@ services:
       context: ./frontend
     container_name: satcache_frontend
     ports:
-      - "0.0.0.0:3000:80"
+      - "3000:80"
     depends_on:
       - backend
 

@@ -109,8 +109,8 @@
 <div id="app"></div>
 
 <div class="console">
-  <div class="brand"><b>Sat Cacher&nbsp;3D</b><span>Z-UP · v2</span></div>
-  <div class="sub">Sat Cacher API · or paste NMEA · altitude → Z</div>
+  <div class="brand"><b>GNSS&nbsp;Terrain</b><span>Z-UP · v1</span></div>
+  <div class="sub">Paste NMEA · GGA gives altitude · 1&nbsp;Hz field log</div>
   <textarea id="nmea" spellcheck="false" placeholder="$GPGGA,121106.00,4425.6080,N,02606.1500,E,1,08,0.9,082.4,M,45.0,M,,*5C
 $GPGGA,121107.00,4425.6082,N,02606.1539,E,1,08,0.9,082.6,M,45.0,M,,*..."></textarea>
   <div class="row">
@@ -119,15 +119,10 @@ $GPGGA,121107.00,4425.6082,N,02606.1539,E,1,08,0.9,082.6,M,45.0,M,,*..."></texta
   </div>
   <div class="live">
     <span class="dot" id="dot"></span>
-    <input id="apiurl" value="" spellcheck="false">
-    <button id="fetchbtn">Fetch</button>
+    <input id="wsurl" value="ws://localhost:8080" spellcheck="false">
+    <button id="connect">Connect</button>
   </div>
-  <div class="row">
-    <button id="filebtn">Load JSON file</button>
-  </div>
-  <input id="fileinput" type="file" accept="application/json,.json" style="display:none">
-  <div class="note" id="note">Load a JSON file, fetch from the API, try the sample, or paste NMEA.</div>
-  <div class="note"><a href="index.html" style="color:#5ad1c5">Back to Sat Cacher dashboard</a></div>
+  <div class="note" id="note">Awaiting points — load a sample, or connect to the C++ bridge.</div>
 
   <div class="stats" id="stats" style="display:none">
     <div class="stat"><div class="k">Points</div><div class="v" id="s-pts">—</div></div>
@@ -147,19 +142,11 @@ $GPGGA,121107.00,4425.6082,N,02606.1539,E,1,08,0.9,082.6,M,45.0,M,,*..."></texta
     <div class="ctl"><label>Contour int.</label>
       <input type="range" id="cint" min="0.5" max="10" step="0.5" value="2">
       <div class="val" id="cint-v">2 m</div></div>
-    <div class="ctl"><label>Min sats</label>
-      <input type="range" id="minsats" min="0" max="20" step="1" value="4">
-      <div class="val" id="minsats-v">4</div></div>
-    <div class="ctl"><label>Cluster ±</label>
-      <input type="range" id="radius" min="50" max="5000" step="50" value="500">
-      <div class="val" id="radius-v">500 m</div></div>
     <div class="toggles">
       <div class="chip on" data-t="surface">Surface</div>
       <div class="chip on" data-t="contours">Contours</div>
       <div class="chip" data-t="wire">Wireframe</div>
       <div class="chip" data-t="points">Points</div>
-      <div class="chip on" data-t="fixonly">Fix only</div>
-      <div class="chip on" data-t="trimalt">Trim spikes</div>
       <div class="chip amber" data-t="spin">Auto-rotate</div>
     </div>
   </div>
@@ -313,7 +300,7 @@ const fill=new THREE.DirectionalLight(0x9fb4c7, 0.35); fill.position.set(1,0.8,0
 
 const world=new THREE.Group(); scene.add(world);
 let meshObj=null, wireObj=null, contourObj=null, pointObj=null, grid=null, axes=null;
-const flags={surface:true, contours:true, wire:false, points:false, spin:false, fixonly:true, trimalt:true};
+const flags={surface:true, contours:true, wire:false, points:false, spin:false};
 let exag=2.5, contourInt=2, range={min:0,max:1};
 
 // ---- orbit state (spherical, Z-up) ----
@@ -414,10 +401,9 @@ function buildTerrain(nodes, keepView){
 // ============================ STATS =================================
 function fmtDur(s){ if(s==null) return '—';
   const m=Math.floor(s/60), ss=Math.round(s%60); return m+':'+String(ss).padStart(2,'0'); }
-function updateStats(pts, nodes, meta){
-  meta=meta||{};
+function updateStats(pts, nodes, parsed){
   let minZ=Infinity,maxZ=-Infinity; for(const n of nodes){minZ=Math.min(minZ,n.z);maxZ=Math.max(maxZ,n.z);}
-  // path length (3D) & duration over ordered fixes
+  // path length (3D) & duration over original ordered fixes
   let dist=0; const mPerLat=110540;
   for(let i=1;i<pts.length;i++){
     const a=pts[i-1], b=pts[i];
@@ -429,15 +415,14 @@ function updateStats(pts, nodes, meta){
   let dur=null;
   const ts=pts.map(p=>p.t).filter(v=>v!=null);
   if(ts.length>1) dur=ts[ts.length-1]-ts[0];
-  let spd=(meta.speed!=null)?meta.speed:null; if(spd==null && dur>0) spd=dist/dur;
+  let spd=parsed.rmcSpeed; if(spd==null && dur>0) spd=dist/dur;
   // area via triangulation
   const idx=triangulate(nodes); let area=0;
   for(const tr of idx){ const a=nodes[tr[0]],b=nodes[tr[1]],c=nodes[tr[2]];
     area+=Math.abs((b.x-a.x)*(c.y-a.y)-(c.x-a.x)*(b.y-a.y))/2; }
 
   const $=id=>document.getElementById(id);
-  const total=(meta.total!=null)?meta.total:nodes.length, label=meta.label||'pts';
-  $('s-pts').innerHTML = nodes.length+' <small>/ '+total+' '+label+'</small>';
+  $('s-pts').innerHTML = nodes.length+' <small>/ '+parsed.lines+' GGA</small>';
   $('s-area').innerHTML = area>=10000 ? (area/10000).toFixed(2)+' <small>ha</small>'
                                       : Math.round(area)+' <small>m²</small>';
   $('s-emin').innerHTML = minZ.toFixed(1)+' <small>m</small>';
@@ -452,27 +437,20 @@ function updateStats(pts, nodes, meta){
 }
 
 // ============================ DRIVE =================================
-let curNodes=null, curPts=null, curMeta=null;
+let curNodes=null, curPts=null, curParsed=null;
 function note(msg, warn){ const n=document.getElementById('note');
   n.textContent=msg; n.className='note'+(warn?' warn':''); }
-
-// shared core: build terrain + stats from [{lat,lon,alt,t}] plus a meta object
-function renderPoints(pts, meta, keepView){
-  if(pts.length<3){ note('Only '+pts.length+' point(s) after filtering — need ≥3.', true); return false; }
-  const {nodes}=toLocal(pts);
-  curNodes=nodes; curPts=pts; curMeta=meta;
-  if(!buildTerrain(nodes, keepView)) return false;
-  updateStats(pts, nodes, meta);
-  document.getElementById('stats').style.display='grid';
-  document.getElementById('ctrls').style.display='flex';
-  return true;
-}
 
 function render(text, keepView){
   const parsed=parseNMEA(text);
   if(parsed.pts.length<3){ note('Found '+parsed.pts.length+' usable fixes — need ≥3 GGA with altitude.', true); return; }
-  if(renderPoints(parsed.pts, {speed:parsed.rmcSpeed, total:parsed.lines, label:'GGA'}, keepView))
-    note('Surface built from '+curNodes.length+' nodes.');
+  const {nodes}=toLocal(parsed.pts);
+  curNodes=nodes; curPts=parsed.pts; curParsed=parsed;
+  if(!buildTerrain(nodes, keepView)) return;
+  updateStats(parsed.pts, nodes, parsed);
+  document.getElementById('stats').style.display='grid';
+  document.getElementById('ctrls').style.display='flex';
+  note('Surface built from '+nodes.length+' nodes · '+triangulate(nodes).length+' triangles.');
 }
 function rebuild(){ if(curNodes){ buildTerrain(curNodes, true); } }
 
@@ -521,139 +499,52 @@ document.getElementById('sample').onclick=()=>{
   render(data);
 };
 
-// ============================ SATCACHE API SOURCE ==================
-// The API returns already-parsed rows (lat, lon, alt_m, satellites, fix, …),
-// so there's no NMEA to parse here — we filter for quality and render.
-let rawRows=null;   // all rows from the API, chronological
-const dot=document.getElementById('dot'), fetchBtn=document.getElementById('fetchbtn');
-const apiInput=document.getElementById('apiurl');
-apiInput.value = `http://${window.location.hostname || 'localhost'}:8000/api/points?limit=1000`;
+// ============================ LIVE FEED (WebSocket) =================
+let ws=null, liveLines=[], liveStarted=false, pending=false, lastBuild=0;
+const dot=document.getElementById('dot'), connectBtn=document.getElementById('connect');
 
-function median(a){ if(!a.length) return 0; const s=[...a].sort((x,y)=>x-y);
-  const m=s.length>>1; return s.length%2 ? s[m] : (s[m-1]+s[m])/2; }
-function avg(a){ return a.length ? a.reduce((s,v)=>s+v,0)/a.length : null; }
-
-function ingestRows(rows){
-  const clean=[];
-  for(const r of rows){
-    const lat=+r.lat, lon=+r.lon;
-    const alt=+(r.alt_m!=null ? r.alt_m : r.alt);
-    if(!isFinite(lat)||!isFinite(lon)||!isFinite(alt)) continue;
-    clean.push({lat, lon, alt,
-      sats:+(r.satellites||0), fix:!!r.fix,
-      speed:(r.speed_kmph!=null ? r.speed_kmph/3.6 : null),   // km/h → m/s
-      t:(r.created_at ? Date.parse(r.created_at)/1000 : null)});
-  }
-  clean.sort((a,b)=>(a.t||0)-(b.t||0));   // chronological for path/duration
-  rawRows=clean;
-  applyRowFilters(false);
+function scheduleBuild(){
+  if(pending) return; pending=true;
+  const wait=Math.max(0, 700-(performance.now()-lastBuild)); // throttle to ~1 rebuild/0.7s
+  setTimeout(()=>{
+    pending=false; lastBuild=performance.now();
+    render(liveLines.join('\n'), liveStarted); // keep camera after first frame
+    liveStarted=true;
+  }, wait);
 }
-
-function applyRowFilters(keepView){
-  if(!rawRows) return;
-  const minSats=+document.getElementById('minsats').value;
-  const rv=+document.getElementById('radius').value;
-  const radius=rv>=5000 ? Infinity : rv;
-  const fixOnly=flags.fixonly;
-
-  let f=rawRows.filter(r=> r.sats>=minSats && (!fixOnly || r.fix));
-  const dropQual=rawRows.length-f.length;
-
-  let dropOut=0;
-  if(f.length && radius!==Infinity){
-    const lat0=median(f.map(r=>r.lat)), lon0=median(f.map(r=>r.lon));
-    const mLon=111320*Math.cos(lat0*Math.PI/180), mLat=110540;
-    const before=f.length;
-    f=f.filter(r=>{ const dx=(r.lon-lon0)*mLon, dy=(r.lat-lat0)*mLat;
-      return Math.hypot(dx,dy)<=radius; });
-    dropOut=before-f.length;
-  }
-
-  // reject vertical spikes (GPS altitude noise) via robust MAD, keeping real relief
-  let dropAlt=0;
-  if(f.length>=8 && flags.trimalt){
-    const alts=f.map(r=>r.alt), medA=median(alts);
-    const mad=median(alts.map(a=>Math.abs(a-medA)));
-    const lim=Math.max(6*1.4826*mad, 4);   // ~6σ, never tighter than ±4 m
-    const before=f.length;
-    f=f.filter(r=>Math.abs(r.alt-medA)<=lim);
-    dropAlt=before-f.length;
-  }
-
-  const meta={speed:avg(f.map(r=>r.speed).filter(v=>v!=null)),
-              total:rawRows.length, label:'rows'};
-  if(renderPoints(f, meta, keepView)){
-    note('Rendered '+f.length+' of '+rawRows.length+' rows · dropped '+dropQual+
-         ' low-quality, '+dropOut+' outlier'+(dropOut===1?'':'s')+', '+dropAlt+' alt-spike'+(dropAlt===1?'':'s')+'.');
-  }
+function onLine(line){
+  line=line.trim(); if(!line.startsWith('$')) return;
+  liveLines.push(line);
+  if(liveLines.length>200000) liveLines.shift(); // safety cap
+  if(liveLines.length>=3) scheduleBuild();
 }
-
-function extractRows(data){
-  return Array.isArray(data) ? data
-    : Array.isArray(data.points) ? data.points
-    : Array.isArray(data.items)  ? data.items
-    : Array.isArray(data.data)   ? data.data : null;
+function disconnect(){
+  if(ws){ ws.onclose=null; try{ws.close();}catch(e){} ws=null; }
+  dot.className='dot'; connectBtn.textContent='Connect';
 }
-
-async function fetchAPI(){
-  const url=document.getElementById('apiurl').value.trim();
-  if(!url){ note('Enter your API URL first.', true); return; }
-  dot.className='dot on'; note('Fetching '+url+' …');
-  try{
-    const res=await fetch(url, {headers:{'Accept':'application/json'}});
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const data=await res.json();
-    const rows=extractRows(data);
-    if(!rows){ note('Response has no points array — check the endpoint path.', true); dot.className='dot err'; return; }
-    if(rows.length===0){ note('API returned 0 rows.', true); dot.className='dot err'; return; }
-    if(data.count!=null && data.count>rows.length)
-      note('Note: API says '+data.count+' total but returned '+rows.length+' — may be paginated (add ?limit=).');
-    ingestRows(rows);
-    dot.className='dot on';
-  }catch(err){
-    dot.className='dot err';
-    note('Fetch failed: '+err.message+' — likely CORS or API not running (see console).', true);
-    console.error('SatCache fetch error:', err);
-  }
-}
-fetchBtn.onclick=fetchAPI;
-
-// ---- load a JSON file straight from the computer (no API needed) ----
-const fileBtn=document.getElementById('filebtn'), fileInput=document.getElementById('fileinput');
-fileBtn.onclick=()=>fileInput.click();
-fileInput.onchange=()=>{
-  const file=fileInput.files[0]; if(!file) return;
-  note('Reading '+file.name+' …');
-  const reader=new FileReader();
-  reader.onload=()=>{
-    try{
-      const data=JSON.parse(reader.result);
-      const rows=extractRows(data);
-      if(!rows){ note('That file has no points array (expected {"points":[…]} or a bare array).', true); dot.className='dot err'; return; }
-      if(rows.length===0){ note('That file has 0 rows.', true); dot.className='dot err'; return; }
-      ingestRows(rows);
-      dot.className='dot on';
-    }catch(err){
-      dot.className='dot err';
-      note('Could not read that file — is it valid JSON? ('+err.message+')', true);
-      console.error('file load error:', err);
-    }
+function connect(){
+  const url=document.getElementById('wsurl').value.trim();
+  disconnect(); liveStarted=false;
+  note('Connecting to '+url+' …');
+  try{ ws=new WebSocket(url); }
+  catch(e){ note('Bad WebSocket URL.', true); dot.className='dot err'; return; }
+  ws.onopen=()=>{ dot.className='dot on'; connectBtn.textContent='Disconnect';
+    note('Live — streaming fixes from the bridge.'); };
+  ws.onmessage=ev=>{
+    // a message may hold one line or several (newline-separated)
+    String(ev.data).split(/\r?\n/).forEach(onLine);
   };
-  reader.onerror=()=>{ dot.className='dot err'; note('Failed to open the file.', true); };
-  reader.readAsText(file);
-  fileInput.value=''; // allow re-loading the same filename later
-};
+  ws.onerror=()=>{ dot.className='dot err';
+    note('Connection error — is the C++ bridge running on that address?', true); };
+  ws.onclose=()=>{ if(ws){ dot.className='dot err';
+    note('Disconnected from bridge.', true); } ws=null; connectBtn.textContent='Connect'; };
+}
+connectBtn.onclick=()=>{ if(ws) disconnect(); else connect(); };
 
 // ---- control bindings ----
 const exagEl=document.getElementById('exag'), cintEl=document.getElementById('cint');
 exagEl.oninput=()=>{ exag=+exagEl.value; document.getElementById('exag-v').textContent=exag+'×'; rebuild(); };
 cintEl.oninput=()=>{ contourInt=+cintEl.value; document.getElementById('cint-v').textContent=contourInt+' m'; rebuild(); };
-const minsatsEl=document.getElementById('minsats'), radiusEl=document.getElementById('radius');
-minsatsEl.oninput=()=>{ document.getElementById('minsats-v').textContent=minsatsEl.value;
-  if(rawRows) applyRowFilters(true); };
-radiusEl.oninput=()=>{ const v=+radiusEl.value;
-  document.getElementById('radius-v').textContent = v>=5000 ? 'all' : v+' m';
-  if(rawRows) applyRowFilters(true); };
 document.querySelectorAll('.chip').forEach(ch=>{
   ch.onclick=()=>{
     const t=ch.dataset.t; flags[t]=!flags[t]; ch.classList.toggle('on', flags[t]);
@@ -661,8 +552,6 @@ document.querySelectorAll('.chip').forEach(ch=>{
     if(t==='wire'&&wireObj) wireObj.visible=flags.wire;
     if(t==='contours'&&contourObj) contourObj.visible=flags.contours;
     if(t==='points'&&pointObj) pointObj.visible=flags.points;
-    if(t==='fixonly'&&rawRows) applyRowFilters(true);
-    if(t==='trimalt'&&rawRows) applyRowFilters(true);
   };
 });
 

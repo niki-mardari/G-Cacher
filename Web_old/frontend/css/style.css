@@ -1,0 +1,126 @@
+:root {
+  --ink: #0d1b2a;
+  --slate: #415a77;
+  --mist: #e0e1dd;
+  --paper: #f7f7f2;
+  --blue: #1d6fb8;
+  --red: #e63946;
+  --green: #2a9d8f;
+  --gold: #ffb703;
+  --orange: #fb8500;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 16px 24px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+header h1 { font-size: 1.3rem; letter-spacing: -0.02em; }
+header .tag { color: var(--gold); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+header nav { margin-left: auto; display: flex; gap: 12px; flex-wrap: wrap; }
+header nav a { color: var(--paper); text-decoration: none; font-size: 0.8rem; border-bottom: 1px solid transparent; }
+header nav a:hover { border-bottom-color: var(--gold); }
+
+.layout { display: flex; flex-wrap: wrap; min-height: calc(100vh - 63px); }
+#map { flex: 1 1 520px; height: calc(100vh - 63px); min-height: 450px; }
+
+.panel {
+  flex: 1 1 360px;
+  max-width: 520px;
+  padding: 22px;
+  background: var(--paper);
+  border-left: 3px solid var(--mist);
+  overflow: auto;
+  max-height: calc(100vh - 63px);
+}
+
+.panel h2 {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--slate);
+  margin-bottom: 10px;
+}
+
+.card, .hint-card {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 16px 18px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+}
+
+.hint-card .label { color: var(--gold); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.hint-card .riddle { font-size: 1.02rem; margin-top: 8px; line-height: 1.45; }
+.hint-card .progress { font-size: 0.75rem; color: var(--mist); margin-top: 12px; }
+
+.device {
+  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 18px;
+  text-align: center;
+  border: 2px solid var(--mist);
+  background: #fff;
+  transition: background 0.25s, border-color 0.25s, color 0.25s;
+}
+.device .sig-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.8; }
+.device .sig-main { font-size: 1.25rem; font-weight: bold; margin: 8px 0 4px; }
+.device .sig-sub { font-size: 0.82rem; opacity: 0.9; }
+.device.blue { background: var(--blue); border-color: var(--blue); color: #fff; }
+.device.red { background: var(--red); border-color: var(--red); color: #fff; }
+.device.green { background: var(--green); border-color: var(--green); color: #fff; }
+.device.orange { background: var(--orange); border-color: var(--orange); color: #fff; }
+.device.yellow { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  margin-top: 8px;
+}
+button:hover { filter: brightness(0.95); }
+button.secondary { background: var(--mist); color: var(--ink); }
+.button-grid { margin-bottom: 10px; }
+
+.hint-box { font-size: 0.75rem; color: var(--slate); margin: 12px 0 18px; line-height: 1.6; }
+.hint-box code { background: var(--mist); padding: 2px 4px; border-radius: 4px; }
+
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 18px; }
+.info-grid div { background: #fff; border: 1px solid var(--mist); border-radius: 8px; padding: 10px; }
+.info-grid span { display: block; font-size: 0.68rem; color: var(--slate); text-transform: uppercase; letter-spacing: 0.08em; }
+.info-grid b { display: block; font-size: 0.85rem; margin-top: 4px; word-break: break-word; }
+
+.log-section { margin-top: 8px; }
+.table-wrap { overflow: auto; max-height: 320px; border: 1px solid var(--mist); border-radius: 8px; background: #fff; }
+table { width: 100%; border-collapse: collapse; font-size: 0.72rem; }
+th, td { padding: 8px; border-bottom: 1px solid var(--mist); text-align: left; white-space: nowrap; }
+th { position: sticky; top: 0; background: var(--ink); color: var(--paper); }
+tr:last-child td { border-bottom: none; }
+
+@media (max-width: 860px) {
+  #map { height: 55vh; }
+  .panel { max-width: none; max-height: none; border-left: none; border-top: 3px solid var(--mist); }
+  header nav { width: 100%; margin-left: 0; }
+}

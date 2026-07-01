@@ -3,76 +3,111 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SatCache — Live GNSS Dashboard</title>
+  <title>Sat Cacher Dashboard</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header>
-    <h1>SatCache</h1>
-    <span class="tag">TenStar ESP32-S3 × LC29H · live GNSS dashboard</span>
+    <div>
+      <h1>Sat Cacher</h1>
+      <p>ESP32-S3 GNSS dashboard for the geocache game, saved locations, and 3D route viewing.</p>
+    </div>
     <nav>
-      <a href="index.html">Dashboard</a>
-      <a href="terrain.html">3D Route</a>
-      <a href="http://localhost:8000/docs" target="_blank" rel="noreferrer">API Docs</a>
+      <a href="#game">Geocache game</a>
+      <a href="#saved">Saved locations</a>
+      <a href="terrain.html">3D viewer</a>
+      <a id="docsLink" href="http://localhost:8000/docs" target="_blank">API docs</a>
     </nav>
   </header>
 
-  <main class="layout">
-    <section id="map"></section>
+  <main>
+    <section class="intro cards">
+      <article>
+        <h2>Geocache game</h2>
+        <p>Preset destinations are famous Irish landmarks and TU Dublin Tallaght. The backend uses the latest GNSS position and chooses the closest active landmark as the current destination.</p>
+        <a href="#game">Open game panel</a>
+      </article>
+      <article>
+        <h2>3D viewer</h2>
+        <p>The new 3D route viewer uses the telemetry points from the API and plots the route with altitude.</p>
+        <a href="terrain.html">Open 3D viewer</a>
+      </article>
+      <article>
+        <h2>Saved locations</h2>
+        <p>Marked spots from the Sat Cacher device are saved as assets. They can represent a car, pipe, valve, cable, survey point, or any important place.</p>
+        <a href="#saved">Open saved locations</a>
+      </article>
+      <article>
+        <h2>API docs</h2>
+        <p>FastAPI generates documentation for the telemetry, assets, locations, and route endpoints.</p>
+        <a id="docsCardLink" href="http://localhost:8000/docs" target="_blank">Open API docs</a>
+      </article>
+    </section>
 
-    <aside class="panel">
-      <section class="card hint-card">
-        <div class="label">Current command</div>
-        <div class="riddle" id="commandTitle">Waiting for telemetry...</div>
-        <div class="progress" id="commandMessage">Start the backend and send telemetry from the ESP32-S3 or use map-click simulation.</div>
-      </section>
+    <section class="layout">
+      <div class="map-card">
+        <div id="map"></div>
+      </div>
 
-      <section>
-        <h2>Device signal</h2>
-        <div class="device" id="device">
-          <div class="sig-label">No live reading yet</div>
-          <div class="sig-main" id="sigMain">—</div>
-          <div class="sig-sub" id="sigSub">The dashboard refreshes every 3 seconds.</div>
+      <aside class="side-panel">
+        <section id="game" class="panel">
+          <h2>Geocache game</h2>
+          <div class="status-box" id="commandBox">
+            <b id="commandText">Waiting for telemetry</b>
+            <span id="commandMessage">Send telemetry from the ESP32-S3 or use the simulator.</span>
+          </div>
+          <dl class="readings">
+            <div><dt>Current destination</dt><dd id="targetName">—</dd></div>
+            <div><dt>Distance</dt><dd id="targetDistance">—</dd></div>
+            <div><dt>Latest lat/lon</dt><dd id="latestLatLon">—</dd></div>
+            <div><dt>Satellites</dt><dd id="latestSats">—</dd></div>
+            <div><dt>HDOP</dt><dd id="latestHdop">—</dd></div>
+            <div><dt>Server</dt><dd id="serverStatus">Checking...</dd></div>
+          </dl>
+        </section>
+
+        <section class="panel">
+          <h2>Simulator</h2>
+          <p>Click the map, then send simulated telemetry. This is useful when the ESP32 is not connected.</p>
+          <div class="button-row">
+            <button id="simulateBtn">Send simulated telemetry</button>
+            <button id="clearBtn" class="secondary">Clear telemetry</button>
+          </div>
+        </section>
+      </aside>
+    </section>
+
+    <section id="saved" class="panel wide-panel">
+      <div class="section-title-row">
+        <div>
+          <h2>Saved locations</h2>
+          <p>These are marked spots saved from the ESP32-S3 or from this dashboard. Rename and tag them here.</p>
         </div>
-      </section>
+        <button id="saveLatestBtn">Save latest GNSS point</button>
+      </div>
+      <div id="assetList" class="asset-list">No saved locations loaded yet.</div>
+    </section>
 
-      <section class="button-grid">
-        <button id="simulateBtn">Send simulated telemetry from map click</button>
-        <button id="clearBtn" class="secondary">Clear telemetry log</button>
-      </section>
-
-      <p class="hint-box">
-        Click the map to choose a simulated position, then press the simulate button. The real ESP32-S3 sends the same type of JSON to <code>/api/telemetry</code>.
-      </p>
-
-      <section class="info-grid">
-        <div><span>Latest lat/lon</span><b id="latestLatLon">—</b></div>
-        <div><span>Satellites</span><b id="latestSats">—</b></div>
-        <div><span>HDOP</span><b id="latestHdop">—</b></div>
-        <div><span>Distance</span><b id="latestDistance">—</b></div>
-      </section>
-
-      <section class="log-section">
-        <h2>Telemetry log</h2>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Time</th>
-                <th>Lat</th>
-                <th>Lon</th>
-                <th>Sats</th>
-                <th>HDOP</th>
-                <th>Command</th>
-              </tr>
-            </thead>
-            <tbody id="logBody"></tbody>
-          </table>
-        </div>
-      </section>
-    </aside>
+    <section class="panel wide-panel">
+      <h2>Telemetry log</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Time</th>
+              <th>Lat</th>
+              <th>Lon</th>
+              <th>Sats</th>
+              <th>HDOP</th>
+              <th>Command</th>
+            </tr>
+          </thead>
+          <tbody id="logBody"></tbody>
+        </table>
+      </div>
+    </section>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
