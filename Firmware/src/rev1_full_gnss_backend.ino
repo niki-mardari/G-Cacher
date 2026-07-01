@@ -22,13 +22,18 @@
 
 // Current Issues:
 /*
-1. Gets stuck in connecting to wifi due to polling
-2. Touch becomes unrepsonsive need non blocking functions 
+1. Gets stuck in connecting to wifi due to polling when wifi not available.
+2. Touch becomes unrepsonsive need non blocking functions possiby scheduler using millis or a better option
 3. Need RTOS or scheduler for each function
-4. Slow uploads 
-5. Needs Testing!
-6. Need to make menu for GeoCache to change the screen color and give hints 
-The menu should be an option instead of 
+4. Slow uploads to server  
+5. Needs some sort of Testing for reliability!
+6. Need menu redesign. Need to make menu for GeoCache to change the screen color and give hints 
+The menu should be an option instead of too many options. Live GNSS should be merged with satellite data, the screen should not be packed, need a simple table to show all available parameters. 
+Maybe have categories for LIVE GNSS and satellite data, signal quality, FSPL calculator. Campus survey should be its own menu. System status should be its own menu. Need a separate menu for GeoCache which would get hints from the server and display them on the screen. 
+The server should tell the MCU if the user is heading in the correct direction. All the logic happens on the server.
+
+The buzzer should not buzz continuously when the GNSS connection is established. The buzzer should play a melody when the System turns on, a cheerful adventurous melody. The buzzer should beep when there are touch presses like it already does.
+
 */
 
 #define LGFX_USE_V1
