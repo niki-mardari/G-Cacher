@@ -27,6 +27,7 @@
 3. Need RTOS or scheduler for each function
 4. Slow uploads 
 5. Needs Testing!
+6. Need to make menu for GeoCache to change the screen color and give hints 
 */
 
 #define LGFX_USE_V1
