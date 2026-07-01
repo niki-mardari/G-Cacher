@@ -13,6 +13,10 @@ The ESP32-S3 uploads telemetry to:
 ```text
 http://YOUR_LAPTOP_IP:8000/api/telemetry
 ```
+On smartphone:
+```text
+http://10.107.7.42:3000/index.html
+```
 
 The browser dashboard is available at:
 
