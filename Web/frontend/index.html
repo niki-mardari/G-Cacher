@@ -29,13 +29,8 @@
     <section class="hero">
       <div class="hero-kicker">SatCacher project menu</div>
       <h2>GNSS logging, geocaching, saved field points and 3D route viewing.</h2>
-      <p>
-        This is the simple home menu for the SatCacher web server. Each feature has its own page so the interface is easier to understand and not overloaded.
-      </p>
 
       <div class="status-strip">
-        <div class="status-pill"><span>Frontend</span><b>Port 3000</b></div>
-        <div class="status-pill"><span>Backend</span><b id="apiHost">Port 8000</b></div>
         <div class="status-pill"><span>Database</span><b>PostgreSQL</b></div>
         <div class="status-pill"><span>Device</span><b>ESP32-S3 + LC29H</b></div>
       </div>
@@ -63,10 +58,6 @@
         <p>Open FastAPI documentation to test endpoints and inspect the backend.</p>
       </a>
     </section>
-
-    <p class="footer-note">
-      Run with <code>docker compose up --build -d</code>. The page automatically uses the current host for API links.
-    </p>
   </main>
 
   <script src="js/config.js"></script>
