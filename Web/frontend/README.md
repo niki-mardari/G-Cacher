@@ -1,20 +1,20 @@
-# Frontend
+# SatCacher Frontend
 
-This is the Sat Cacher website.
+The frontend is kept simple on purpose.
 
-Main pages:
+## Main files
 
-```text
-index.html       Main dashboard, geocache game, saved locations, map
-terrain.html     New 3D route viewer
-```
+- `index.html` - simple home menu
+- `geocache.html` - geocache game map
+- `saved-locations.html` - saved location markers and editing
+- `terrain.html` - new 3D viewer prototype
+- `prototypes/terrain-original.html` - old terrain page kept as backup
+- `prototypes/3D_Modelling_Test_Sample.html` - teammate prototype copy
 
-Important files:
+## JavaScript
 
-```text
-js/config.js     Chooses the API host automatically
-js/app.js        Dashboard logic
-css/style.css    Dashboard styling
-```
+- `js/config.js` - chooses the backend URL based on the current browser host
+- `js/geocache.js` - loads latest telemetry and landmarks
+- `js/saved-locations.js` - loads and edits saved field locations
 
-The frontend is served by Nginx in Docker on port `3000`.
+The pages use Leaflet from a CDN for maps.

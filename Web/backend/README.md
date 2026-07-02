@@ -1,25 +1,9 @@
-# Backend
+# SatCacher Backend
 
-This is the FastAPI backend for Sat Cacher.
+FastAPI backend for the SatCacher project.
 
-Main file:
+The ESP32 posts telemetry to `/api/telemetry`.
+The backend stores it in PostgreSQL and checks the nearest preset landmark.
 
-```text
-backend/app/main.py
-```
-
-It receives telemetry from the ESP32-S3 at:
-
-```text
-POST /api/telemetry
-```
-
-It stores points in PostgreSQL and returns the current geocache command.
-
-It also saves marked locations/assets at:
-
-```text
-POST /api/assets
-```
-
-Run through Docker Compose from the `Web` folder.
+The saved location feature uses `/api/assets`.
+This is useful for marked spots like a parked car, pipe, cable, valve, or survey point.

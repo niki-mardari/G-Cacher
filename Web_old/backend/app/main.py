@@ -90,6 +90,12 @@ class AssetIn(BaseModel):
     hdop: Optional[float] = None
 
 
+class AssetUpdate(BaseModel):
+    asset_type: Optional[str] = None
+    name: Optional[str] = None
+    description: Optional[str] = None
+
+
 # -----------------------------------------------------------------------------
 # Database helpers
 # -----------------------------------------------------------------------------
@@ -199,23 +205,30 @@ def init_db():
                 """
             )
 
-            cur.execute("SELECT COUNT(*) FROM game_locations;")
-            count = cur.fetchone()[0]
-            if count == 0:
-                seed_locations = [
-                    ("Trinity College", "Ireland's oldest university, founded in 1592. Home to the Book of Kells.", 53.3438, -6.2546, 30, 1),
-                    ("Dublin Castle", "For 700 years the seat of British rule in Ireland. Find the Record Tower.", 53.3429, -6.2674, 30, 2),
-                    ("St Patrick's Cathedral", "The national cathedral, the largest church in Ireland. Jonathan Swift was its dean.", 53.3395, -6.2716, 30, 3),
-                    ("The Spire", "A 120-metre stainless steel pin on O'Connell Street, raised in 2003.", 53.3498, -6.2603, 30, 4),
-                    ("TU Dublin Tallaght", "Local testing point near the Tallaght campus.", 53.2911, -6.3630, 35, 5),
-                ]
-                cur.executemany(
-                    """
-                    INSERT INTO game_locations (name, hint, lat, lon, radius_m, play_order)
-                    VALUES (%s, %s, %s, %s, %s, %s);
-                    """,
-                    seed_locations,
-                )
+            # Seed famous Irish landmarks plus TU Dublin Tallaght.
+            # This inserts missing names without deleting existing project data.
+            seed_locations = [
+                ("TU Dublin Tallaght", "Local testing point near the Tallaght campus.", 53.2911, -6.3630, 35, 1),
+                ("Trinity College Dublin", "Ireland's oldest university and home of the Book of Kells.", 53.3438, -6.2546, 30, 2),
+                ("Dublin Castle", "Historic castle and former centre of British rule in Ireland.", 53.3429, -6.2674, 30, 3),
+                ("St Patrick's Cathedral", "The national cathedral and one of Dublin's best known landmarks.", 53.3395, -6.2716, 30, 4),
+                ("The Spire", "Tall stainless steel monument on O'Connell Street.", 53.3498, -6.2603, 30, 5),
+                ("Newgrange", "Prehistoric passage tomb in County Meath.", 53.6947, -6.4755, 50, 6),
+                ("Rock of Cashel", "Historic fortress and religious site in County Tipperary.", 52.5200, -7.8900, 50, 7),
+                ("Cliffs of Moher", "Famous Atlantic sea cliffs in County Clare.", 52.9715, -9.4309, 80, 8),
+            ]
+
+            for name, hint, lat, lon, radius_m, play_order in seed_locations:
+                cur.execute("SELECT id FROM game_locations WHERE name = %s LIMIT 1;", (name,))
+                existing = cur.fetchone()
+                if existing is None:
+                    cur.execute(
+                        """
+                        INSERT INTO game_locations (name, hint, lat, lon, radius_m, play_order)
+                        VALUES (%s, %s, %s, %s, %s, %s);
+                        """,
+                        (name, hint, lat, lon, radius_m, play_order),
+                    )
         conn.commit()
 
 
@@ -433,6 +446,7 @@ def root():
             "/api/log",
             "/api/locations",
             "/api/assets",
+            "/api/assets/{asset_id}",
         ],
     }
 
@@ -560,6 +574,43 @@ def get_assets(limit: int = 200):
         (limit,),
     )
     return {"count": len(rows), "assets": rows}
+
+
+@app.patch("/api/assets/{asset_id}")
+def update_asset(asset_id: int, update: AssetUpdate):
+    current = fetch_one("SELECT * FROM saved_assets WHERE id = %s;", (asset_id,))
+    if current is None:
+        raise HTTPException(status_code=404, detail="Asset not found")
+
+    new_name = update.name if update.name is not None else current["name"]
+    new_type = update.asset_type if update.asset_type is not None else current["asset_type"]
+    new_description = update.description if update.description is not None else current["description"]
+
+    row = execute_one(
+        """
+        UPDATE saved_assets
+        SET name = %s, asset_type = %s, description = %s
+        WHERE id = %s
+        RETURNING *;
+        """,
+        (new_name, new_type, new_description, asset_id),
+    )
+    return {"ok": True, "asset": row}
+
+
+@app.delete("/api/assets/{asset_id}")
+def delete_asset(asset_id: int):
+    row = execute_one(
+        """
+        DELETE FROM saved_assets
+        WHERE id = %s
+        RETURNING *;
+        """,
+        (asset_id,),
+    )
+    if row is None:
+        raise HTTPException(status_code=404, detail="Asset not found")
+    return {"ok": True, "deleted_asset": row}
 
 
 @app.delete("/api/dev/clear-telemetry")

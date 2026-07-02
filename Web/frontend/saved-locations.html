@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SatCacher — Saved Locations</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand"><div class="logo-mark">SC</div><div><h1>SatCacher</h1><p>Saved field locations</p></div></div>
+      <nav class="top-nav">
+        <a href="index.html">Home</a>
+        <a href="geocache.html">Geocache</a>
+        <a href="terrain.html">3D Viewer</a>
+        <a class="active" href="saved-locations.html">Saved Locations</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-title">
+      <div>
+        <h2>Saved Locations</h2>
+        <p>Marked spots saved from the SatCacher device. Examples: car, pipe, cable, survey point.</p>
+      </div>
+      <button id="refreshBtn">Refresh</button>
+    </div>
+
+    <section class="page-layout">
+      <div class="map-panel"><div id="map" class="map"></div></div>
+      <aside class="side-panel">
+        <section class="card">
+          <h3>Edit selected marker</h3>
+          <p class="footer-note" id="selectedHint">Select a marker from the map or table.</p>
+          <input type="hidden" id="assetId" />
+          <label for="assetName">Name</label>
+          <input id="assetName" placeholder="Example: Pipe near Block A" />
+          <label for="assetType">Type / tag</label>
+          <select id="assetType">
+            <option value="marker">General marker</option>
+            <option value="car">Car</option>
+            <option value="pipe">Pipe</option>
+            <option value="cable">Cable</option>
+            <option value="survey">Survey point</option>
+            <option value="construction">Construction point</option>
+            <option value="other">Other</option>
+          </select>
+          <label for="assetDescription">Description</label>
+          <textarea id="assetDescription" rows="3" placeholder="Short note about this location"></textarea>
+          <div class="btn-row" style="margin-top:10px">
+            <button id="saveBtn">Save changes</button>
+            <button class="danger" id="deleteBtn">Delete</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>Saved list</h3>
+          <div class="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Type</th><th>Lat</th><th>Lon</th></tr></thead><tbody id="assetsBody"></tbody></table></div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/saved-locations.js"></script>
+</body>
+</html>

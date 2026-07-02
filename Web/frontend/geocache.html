@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SatCacher — Geocache Game</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand"><div class="logo-mark">SC</div><div><h1>SatCacher</h1><p>Geocache game</p></div></div>
+      <nav class="top-nav">
+        <a href="index.html">Home</a>
+        <a class="active" href="geocache.html">Geocache</a>
+        <a href="terrain.html">3D Viewer</a>
+        <a href="saved-locations.html">Saved Locations</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-title">
+      <div>
+        <h2>Geocache Game</h2>
+        <p>Preset Irish landmarks and the latest SatCacher GNSS position.</p>
+      </div>
+      <div class="btn-row"><button id="refreshBtn">Refresh</button><button class="secondary" id="clearBtn">Clear test telemetry</button></div>
+    </div>
+
+    <section class="page-layout">
+      <div class="map-panel"><div id="map" class="map"></div></div>
+      <aside class="side-panel">
+        <section class="card command-box" id="commandCard">
+          <div class="small-label">Current command</div>
+          <div class="big-value" id="commandValue">Waiting for telemetry</div>
+          <p id="commandMessage">Send data from the ESP32 or use the API docs to post test telemetry.</p>
+        </section>
+
+        <section class="card">
+          <h3>Latest reading</h3>
+          <div class="data-grid">
+            <div class="data-cell"><span>Latitude</span><b id="latValue">—</b></div>
+            <div class="data-cell"><span>Longitude</span><b id="lonValue">—</b></div>
+            <div class="data-cell"><span>Satellites</span><b id="satValue">—</b></div>
+            <div class="data-cell"><span>HDOP</span><b id="hdopValue">—</b></div>
+            <div class="data-cell"><span>Target</span><b id="targetValue">—</b></div>
+            <div class="data-cell"><span>Distance</span><b id="distanceValue">—</b></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>Preset locations</h3>
+          <div class="table-wrap"><table><thead><tr><th>Name</th><th>Radius</th></tr></thead><tbody id="locationsBody"></tbody></table></div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/geocache.js"></script>
+</body>
+</html>

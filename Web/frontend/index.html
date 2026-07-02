@@ -3,115 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sat Cacher Dashboard</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+  <title>SatCacher</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <header>
-    <div>
-      <h1>Sat Cacher</h1>
-      <p>ESP32-S3 GNSS dashboard for the geocache game, saved locations, and 3D route viewing.</p>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-mark">SC</div>
+        <div>
+          <h1>SatCacher</h1>
+          <p>SensateX GNSS field tool</p>
+        </div>
+      </div>
+      <nav class="top-nav">
+        <a class="active" href="index.html">Home</a>
+        <a href="geocache.html">Geocache</a>
+        <a href="terrain.html">3D Viewer</a>
+        <a href="saved-locations.html">Saved Locations</a>
+      </nav>
     </div>
-    <nav>
-      <a href="#game">Geocache game</a>
-      <a href="#saved">Saved locations</a>
-      <a href="terrain.html">3D viewer</a>
-      <a id="docsLink" href="http://localhost:8000/docs" target="_blank">API docs</a>
-    </nav>
   </header>
 
-  <main>
-    <section class="intro cards">
-      <article>
-        <h2>Geocache game</h2>
-        <p>Preset destinations are famous Irish landmarks and TU Dublin Tallaght. The backend uses the latest GNSS position and chooses the closest active landmark as the current destination.</p>
-        <a href="#game">Open game panel</a>
-      </article>
-      <article>
-        <h2>3D viewer</h2>
-        <p>The new 3D route viewer uses the telemetry points from the API and plots the route with altitude.</p>
-        <a href="terrain.html">Open 3D viewer</a>
-      </article>
-      <article>
-        <h2>Saved locations</h2>
-        <p>Marked spots from the Sat Cacher device are saved as assets. They can represent a car, pipe, valve, cable, survey point, or any important place.</p>
-        <a href="#saved">Open saved locations</a>
-      </article>
-      <article>
-        <h2>API docs</h2>
-        <p>FastAPI generates documentation for the telemetry, assets, locations, and route endpoints.</p>
-        <a id="docsCardLink" href="http://localhost:8000/docs" target="_blank">Open API docs</a>
-      </article>
-    </section>
+  <main class="container">
+    <section class="hero">
+      <div class="hero-kicker">SatCacher project menu</div>
+      <h2>GNSS logging, geocaching, saved field points and 3D route viewing.</h2>
+      <p>
+        This is the simple home menu for the SatCacher web server. Each feature has its own page so the interface is easier to understand and not overloaded.
+      </p>
 
-    <section class="layout">
-      <div class="map-card">
-        <div id="map"></div>
-      </div>
-
-      <aside class="side-panel">
-        <section id="game" class="panel">
-          <h2>Geocache game</h2>
-          <div class="status-box" id="commandBox">
-            <b id="commandText">Waiting for telemetry</b>
-            <span id="commandMessage">Send telemetry from the ESP32-S3 or use the simulator.</span>
-          </div>
-          <dl class="readings">
-            <div><dt>Current destination</dt><dd id="targetName">—</dd></div>
-            <div><dt>Distance</dt><dd id="targetDistance">—</dd></div>
-            <div><dt>Latest lat/lon</dt><dd id="latestLatLon">—</dd></div>
-            <div><dt>Satellites</dt><dd id="latestSats">—</dd></div>
-            <div><dt>HDOP</dt><dd id="latestHdop">—</dd></div>
-            <div><dt>Server</dt><dd id="serverStatus">Checking...</dd></div>
-          </dl>
-        </section>
-
-        <section class="panel">
-          <h2>Simulator</h2>
-          <p>Click the map, then send simulated telemetry. This is useful when the ESP32 is not connected.</p>
-          <div class="button-row">
-            <button id="simulateBtn">Send simulated telemetry</button>
-            <button id="clearBtn" class="secondary">Clear telemetry</button>
-          </div>
-        </section>
-      </aside>
-    </section>
-
-    <section id="saved" class="panel wide-panel">
-      <div class="section-title-row">
-        <div>
-          <h2>Saved locations</h2>
-          <p>These are marked spots saved from the ESP32-S3 or from this dashboard. Rename and tag them here.</p>
-        </div>
-        <button id="saveLatestBtn">Save latest GNSS point</button>
-      </div>
-      <div id="assetList" class="asset-list">No saved locations loaded yet.</div>
-    </section>
-
-    <section class="panel wide-panel">
-      <h2>Telemetry log</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Time</th>
-              <th>Lat</th>
-              <th>Lon</th>
-              <th>Sats</th>
-              <th>HDOP</th>
-              <th>Command</th>
-            </tr>
-          </thead>
-          <tbody id="logBody"></tbody>
-        </table>
+      <div class="status-strip">
+        <div class="status-pill"><span>Frontend</span><b>Port 3000</b></div>
+        <div class="status-pill"><span>Backend</span><b id="apiHost">Port 8000</b></div>
+        <div class="status-pill"><span>Database</span><b>PostgreSQL</b></div>
+        <div class="status-pill"><span>Device</span><b>ESP32-S3 + LC29H</b></div>
       </div>
     </section>
+
+    <section class="menu-grid" aria-label="SatCacher features">
+      <a class="menu-card" href="geocache.html">
+        <div class="menu-icon">01</div>
+        <h3>Geocache Game</h3>
+        <p>Show the latest ESP32 position, the closest landmark destination, distance and route on a Leaflet map.</p>
+      </a>
+      <a class="menu-card" href="terrain.html">
+        <div class="menu-icon">02</div>
+        <h3>3D Viewer</h3>
+        <p>Open the new teammate 3D route/terrain prototype using SatCacher GNSS points.</p>
+      </a>
+      <a class="menu-card" href="saved-locations.html">
+        <div class="menu-icon">03</div>
+        <h3>Saved Locations</h3>
+        <p>View marked spots from the device, such as a car, pipe, cable or survey point.</p>
+      </a>
+      <a class="menu-card" id="docsLink" href="http://localhost:8000/docs" target="_blank" rel="noreferrer">
+        <div class="menu-icon">04</div>
+        <h3>API Docs</h3>
+        <p>Open FastAPI documentation to test endpoints and inspect the backend.</p>
+      </a>
+    </section>
+
+    <p class="footer-note">
+      Run with <code>docker compose up --build -d</code>. The page automatically uses the current host for API links.
+    </p>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="js/config.js"></script>
-  <script src="js/app.js"></script>
+  <script>
+    document.getElementById('apiHost').textContent = API_BASE_URL.replace('http://', '');
+    document.getElementById('docsLink').href = apiDocsUrl();
+  </script>
 </body>
 </html>
