@@ -9,7 +9,6 @@ This is a shared repository that Team 10 will use to work on their **BIP26 progr
 * Andrei-Eduard Rusu
 * Carla Daniela Zegarra Bernabe
 * Niki Mardari
-* Rokas Mileris
 * Szymon Blazejowski
 
 ## About the Project
