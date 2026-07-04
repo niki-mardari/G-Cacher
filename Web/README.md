@@ -60,6 +60,7 @@ Only use `down -v` when it is okay to delete local test data.
 - `POST /api/assets` - save a new marked location
 - `PATCH /api/assets/{id}` - rename/tag a saved location
 - `DELETE /api/assets/{id}` - delete a saved location
+- `http://localhost:8000/api/log` - To check the data points in the database 
 
 ## Project idea
 
