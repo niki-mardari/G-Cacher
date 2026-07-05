@@ -81,12 +81,12 @@ The buzzer should not buzz continuously when the GNSS connection is established.
 // Wi-Fi + FastAPI upload
 // ------------------------------------------------------------
 
-const char *WIFI_SSID = "yep";
-const char *WIFI_PASSWORD = "12345678";
+const char *WIFI_SSID = ""; // Put your Wi-Fi SSID here
+const char *WIFI_PASSWORD = ""; // Put your Wi-Fi password here
 
-// Laptop local IP.
-// ESP32 must use laptop IP, not localhost or 127.0.0.1.
-const char *SERVER_URL = "http://10.107.7.42:8000/api/telemetry";
+// Server IP.
+// Example Server URL: "http://<server_ip>:8000/api/telemetry"
+const char *SERVER_URL = ""; // Replace with your FastAPI server URL
 
 #define UPLOAD_INTERVAL_MS       5000
 #define WIFI_CONNECT_TIMEOUT_MS  15000

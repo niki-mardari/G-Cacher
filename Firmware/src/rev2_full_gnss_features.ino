@@ -50,14 +50,17 @@
 // User settings
 // ------------------------------------------------------------
 
-const char *WIFI_SSID = "yep";
-const char *WIFI_PASSWORD = "12345678";
+const char *WIFI_SSID = ""; // Put your Wi-Fi SSID here
+const char *WIFI_PASSWORD = ""; // Put your Wi-Fi password here
 
-// Change this when the backend runs on another laptop.
-const char *SERVER_HOST = "10.107.7.42";
-const char *TELEMETRY_URL = "http://10.107.7.42:8000/api/telemetry";
-const char *ASSETS_URL    = "http://10.107.7.42:8000/api/assets";
+//Server IP.
+const char *SERVER_HOST = ""; // Replace with your FastAPI server IP
+// Replace with "http://<server_ip>:8000/api/telemetry"
+const char *TELEMETRY_URL = "";
+// Replace with "http://<server_ip>:8000/api/assets"
+const char *ASSETS_URL    = "";
 
+// Device ID for telemetry and assets. Change this for each device.
 const char *DEVICE_ID = "tenstar_001";
 
 // ------------------------------------------------------------
