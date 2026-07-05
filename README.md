@@ -22,15 +22,6 @@ G-Cacher is a student engineering maker project developed for the BIP26 programm
 
 ---
 
-## Contributors
-
-* Andrei-Eduard Rusu
-* Carla Daniela Zegarra Bernabe
-* Niki Mardari
-* Szymon Blazejowski
-
----
-
 ## What G-Cacher Can Do
 
 * Read live GNSS data from multiple satellite constellations
@@ -44,23 +35,6 @@ G-Cacher is a student engineering maker project developed for the BIP26 programm
 * Provide API documentation for testing backend endpoints
 
 ---
-
-## Physical Device
-
-The G-Cacher device is built around a Tenstar ESP32-S3 board and an LC29H GNSS receiver.
-
-Main hardware includes:
-
-* Tenstar ESP32-S3 development board
-* LC29H(AA) GNSS receiver
-* ILI9488 touch display
-* SD card storage
-* BMP280 pressure and temperature sensor
-* QMI8658C IMU for acceleration and rotation data
-* 2000 mAh 3.7 V rechargeable Li-ion battery
-* 3D printed enclosure
-
-The device is designed to be portable and suitable for field testing. The battery target is up to approximately 5 hours under heavy use, depending on display brightness, Wi-Fi activity, GNSS usage, and logging behaviour.
 
 <p align="center">
   <img width="360" alt="G-Cacher physical device" src="https://github.com/user-attachments/assets/d02fb363-c22b-4e05-8810-f08625705583" />
@@ -79,36 +53,6 @@ The main device menus include:
 * **NMEA / Logging** — supports viewing GNSS data and saving records to SD card.
 * **Saved Location** — records a location and sends it to the backend as a saved asset.
 * **System Status** — shows device, sensor, SD card, and telemetry status.
-
----
-
-## GNSS Data
-
-G-Cacher receives satellite positioning data through the LC29H GNSS module. The receiver can work with constellations such as GPS, GLONASS, Galileo, BeiDou, and QZSS, depending on configuration and signal availability.
-
-The firmware parses useful values from the receiver, including:
-
-* Latitude
-* Longitude
-* Altitude
-* Speed
-* Date and time
-* Satellite count
-* HDOP
-* Fix quality
-* Signal quality
-
-Detailed GNSS and NMEA explanations are documented in the project wiki and supporting documentation.
-
----
-
-## Signal Quality and Sensor Expansion
-
-G-Cacher converts GNSS reception data into simple signal-quality states so the user can quickly understand whether the current reading is reliable.
-
-The ESP32-S3 board also includes onboard sensors such as an IMU and BMP280 pressure sensor. These sensors can support future sensor-fusion work, where GNSS, motion, pressure, and altitude readings are combined to improve device awareness.
-
-The project also explores Galileo OSNMA where supported. OSNMA can help authenticate Galileo navigation messages and improve resistance to some spoofing scenarios. It does not prevent RF jamming and should be treated as an additional signal-integrity feature rather than a complete security solution.
 
 ---
 
@@ -190,19 +134,6 @@ On the web dashboard, saved points can be viewed on a map and given extra detail
   <img width="680" alt="Database contents" src="https://github.com/user-attachments/assets/8bedb7af-100b-4a19-bb15-da6baa52aa40" />
 </p>
 
-## API Documentation
-
-The backend includes automatically generated FastAPI documentation for testing implemented endpoints.
-
-The API supports areas such as:
-
-* Device telemetry
-* Latest location data
-* Saved locations
-* Track data
-* 3D point data
-* Asset creation and editing
-
 ---
 
 ## Hardware
@@ -252,6 +183,15 @@ Future improvements may include:
 * Improved telemetry error handling
 * Expanded OSNMA testing where supported
 * More complete frontend styling and user workflows
+
+---
+
+## Contributors
+
+* Andrei-Eduard Rusu
+* Carla Daniela Zegarra Bernabe
+* Niki Mardari
+* Szymon Blazejowski
 
 ---
 
