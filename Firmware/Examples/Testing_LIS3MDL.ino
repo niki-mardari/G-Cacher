@@ -17,7 +17,7 @@ Adafruit_LIS3MDL lis3mdl;
 
 void setup(void) {
   Serial.begin(115200);
-  while (!Serial) delay(10);     // will pause Zero, Leonardo, etc until serial console opens
+  while (!Serial) delay(10);
   Wire.setPins(NEW_SDA, NEW_SCL);
   Wire.begin();
 
