@@ -1,9 +1,9 @@
 # G-Cacher
 
-**A portable GNSS surveying and location-mapping tool built with an ESP32-S3, LC29H GNSS receiver, touch display, SD logging, and a FastAPI web platform.**
+**A portable GNSS surveying and location-mapping tool**
 
 <p align="center">
-  <img width="360" alt="G-Cacher device concept" src="https://github.com/user-attachments/assets/1a463576-31dd-4d96-840d-1e0fd5fb8bca" />
+  <img width="360" alt="G-Cacher physical device" src="https://github.com/user-attachments/assets/d02fb363-c22b-4e05-8810-f08625705583" />
 </p>
 
 <p align="center">
@@ -37,7 +37,7 @@ G-Cacher is a student engineering maker project developed for the BIP26 programm
 ---
 
 <p align="center">
-  <img width="360" alt="G-Cacher physical device" src="https://github.com/user-attachments/assets/d02fb363-c22b-4e05-8810-f08625705583" />
+  <img width="360" alt="G-Cacher device concept" src="https://github.com/user-attachments/assets/1a463576-31dd-4d96-840d-1e0fd5fb8bca" />
 </p>
 
 ---
@@ -128,12 +128,6 @@ On the web dashboard, saved points can be viewed on a map and given extra detail
 </p>
 
 ---
-
-<p align="center">
-  <strong>Backend Data Storage</strong><br>
-  <img width="680" alt="Database contents" src="https://github.com/user-attachments/assets/8bedb7af-100b-4a19-bb15-da6baa52aa40" />
-</p>
-
 ---
 
 ## Hardware
