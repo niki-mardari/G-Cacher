@@ -173,13 +173,11 @@ Future improvements may include:
 
 ---
 
-## Video Demonstration
-
 A short demonstration video showing the G-Cacher project in use:
 
-<p align="center">
+<p align="left">
   <a href="https://youtu.be/IPzuhKJv3FM">
-    <img src="https://img.shields.io/badge/Watch%20on%20YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch on YouTube" />
+    <img src="https://img.shields.io/badge/Watch%20on%20YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Demo" />
   </a>
 </p>
 
