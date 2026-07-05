@@ -18,21 +18,23 @@
 
 ## Overview
 
-G-Cacher is a student engineering maker project developed for the BIP26 programme. It combines a portable GNSS device with a web platform for collecting, storing, and visualising location data.
+G-Cacher is a student engineering project developed during the BIP26 programme. The project utilizes a portable GNSS device. A web platform for collecting, storing, and visualising location data.
 
 ---
 
-## What G-Cacher Can Do
+## What it currently does:
 
-* Read live GNSS data from multiple satellite constellations
-* Display position, altitude, speed, satellite count, HDOP, and signal quality
-* Log selected GNSS data to an SD card
-* Send telemetry from the ESP32-S3 device to a backend server
-* Store saved locations as named assets
-* Visualise recorded location points in a web dashboard
-* Support a GeoCache-style navigation game
+Device:
+* Reads live GNSS data from multiple satellite constellations
+* Displays position, altitude, speed, satellite count, HDOP, and signal quality
+* Logs selected GNSS data to an SD card
+* Sends telemetry to a backend server
+
+Webserver (Frontend/ Backend):
+* Visualises recorded location points in a web dashboard on a map
+* A GeoCache-style navigation game
 * Display recorded latitude, longitude, and altitude points in 3D
-* Provide API documentation for testing backend endpoints
+* Saves and displays saved locations 
 
 ---
 
@@ -48,11 +50,11 @@ The device uses a touch-based menu system for viewing live data and interacting 
 
 The main device menus include:
 
-* **Live GNSS** — displays parsed position, altitude, speed, HDOP, satellite count, date, and time.
-* **Signal Quality** — shows whether the current GNSS signal is good, usable, weak, or unavailable.
-* **NMEA / Logging** — supports viewing GNSS data and saving records to SD card.
-* **Saved Location** — records a location and sends it to the backend as a saved asset.
-* **System Status** — shows device, sensor, SD card, and telemetry status.
+* Live GNSS — displays parsed position, altitude, speed, HDOP, satellite count, date, and time.
+* Signal Quality — shows whether the current GNSS signal is good, usable, weak, or unavailable.
+* NMEA / Logging — supports viewing GNSS data and saving records to SD card.
+* Saved Location — records a location and sends it to the backend as a saved asset.
+* System Status — shows device, sensor, SD card, and telemetry status.
 
 ---
 
@@ -144,20 +146,6 @@ On the web dashboard, saved points can be viewed on a map and given extra detail
 
 ---
 
-## Repository Structure
-
-```text
-G-Cacher/
-├── firmware/       # ESP32-S3 firmware and Arduino sketches
-├── web/            # Frontend and FastAPI backend
-├── models/         # 3D enclosure and box design files
-├── docs/           # Technical notes, wiring guides, and wiki material
-├── README.md
-└── .gitignore
-```
-
----
-
 ## Learning Portal / Wiki
 
 [![Learn More - GNSS Learning Portal](https://img.shields.io/badge/LEARN%20MORE-GNSS%20Learning%20Portal-39C5BB?style=for-the-badge\&labelColor=00AEEF\&logo=githubpages\&logoColor=white)](https://coolsphere.github.io/GNSS_Satellite/)
@@ -170,13 +158,9 @@ The wiki contains the more detailed technical documentation for GNSS, NMEA, sens
 
 Future improvements may include:
 
-* Improved enclosure design
-* More complete field testing
-* Better signal-quality mapping
-* Sensor fusion using GNSS, IMU, and barometric readings
-* Improved telemetry error handling
-* Expanded OSNMA testing where supported
-* More complete frontend styling and user workflows
+* Sensor Fusion with extended Kalman filtering
+* PCB
+* Improved enclosure
 
 ---
 
