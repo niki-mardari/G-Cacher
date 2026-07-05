@@ -1,16 +1,16 @@
 # G-Cacher
 
-**A portable GNSS surveying, logging, and location-mapping tool built around an ESP32-S3, LC29H GNSS receiver, touch display, local storage, and a FastAPI web platform.**
+**A portable GNSS surveying, logging, and location-mapping tool built with an ESP32-S3, LC29H GNSS receiver, touch display, local SD storage, and a FastAPI web platform.**
 
 <p align="center">
-  <img width="942" height="1071" alt="G-Cacher device render" src="https://github.com/user-attachments/assets/1a463576-31dd-4d96-840d-1e0fd5fb8bca" />
+  <img width="430" alt="G-Cacher device" src="https://github.com/user-attachments/assets/1a463576-31dd-4d96-840d-1e0fd5fb8bca" />
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/GNSS-Surveying-1E90FF?style=for-the-badge" />
   <img src="https://img.shields.io/badge/ESP32--S3-Firmware-404040?style=for-the-badge&logo=espressif&logoColor=white" />
+  <img src="https://img.shields.io/badge/LC29H-GNSS%20Receiver-2EA44F?style=for-the-badge" />
   <img src="https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
-  <img src="https://img.shields.io/badge/Python-API-3776AB?style=for-the-badge&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/JavaScript-Frontend-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
   <img src="https://img.shields.io/badge/Arduino-Firmware-00979D?style=for-the-badge&logo=arduino&logoColor=white" />
 </p>
@@ -19,73 +19,59 @@
 
 ## Overview
 
-G-Cacher is an engineering student maker project developed for the BIP26 programme. The project combines embedded hardware, GNSS satellite positioning, local data logging, wireless telemetry, backend storage, and a browser-based frontend.
+G-Cacher is a student engineering maker project developed for the BIP26 programme. It combines embedded systems, GNSS satellite positioning, local data logging, wireless telemetry, backend storage, and a browser-based web interface.
 
-The physical device reads raw NMEA data from an LC29H GNSS receiver, parses useful positioning and signal-quality information, displays it on a touch interface, saves selected records to an SD card, and can transmit telemetry to a web server over Wi-Fi.
+The physical device reads raw NMEA data from an LC29H GNSS receiver and parses useful positioning information such as latitude, longitude, altitude, time, date, satellite count, HDOP, speed, and signal quality. The parsed readings are displayed on an ILI9488 touch display and can also be logged to an SD card.
 
-The web platform receives GNSS telemetry from the device, stores useful location records, visualises points in different ways, and provides a FastAPI-based interface for the frontend and device communication.
+The ESP32-S3 connects to a mobile hotspot and sends telemetry to a FastAPI backend. The web platform then stores, visualises, and manages the collected location data through features such as a GeoCache game, 3D terrain viewer, saved location manager, and API documentation.
 
----
-
-## Project Goals
-
-G-Cacher is designed to explore how a low-cost embedded system can be used for practical GNSS-based surveying and location workflows.
-
-The main goals are:
-
-* Read and parse live GNSS data from multiple satellite constellations
-* Display useful position and signal information on a portable device
-* Save GNSS records locally using SD card storage
-* Send telemetry from the ESP32-S3 device to a backend server
-* Store and retrieve location data through a FastAPI backend
-* Provide frontend tools for geocaching, saved locations, API documentation, and 3D terrain visualisation
-* Build a portable enclosure suitable for demonstration and field testing
+This project is intended as a practical demonstration of GNSS-based surveying, field data collection, and location-aware web applications.
 
 ---
 
-## System Architecture
+## Members / Contributors
 
-```text
-GNSS Satellites
-      |
-      v
-LC29H GNSS Receiver
-      |
-      | UART / NMEA
-      v
-ESP32-S3 Device
-      |
-      | Touch UI, SD Logging, Sensors
-      |
-      | Wi-Fi / Mobile Hotspot
-      v
-FastAPI Backend
-      |
-      | API + Database / Stored Records
-      v
-Frontend Web Dashboard
-```
+* Andrei-Eduard Rusu
+* Carla Daniela Zegarra Bernabe
+* Niki Mardari
+* Szymon Blazejowski
+
+---
+
+## Main Features
+
+| Area                 | Description                                                                                      |
+| -------------------- | ------------------------------------------------------------------------------------------------ |
+| GNSS Device          | Portable ESP32-S3 device for reading, parsing, displaying, and logging GNSS data                 |
+| Touch Interface      | ILI9488 touch display used for live readings, signal quality, saved locations, and device status |
+| SD Card Logging      | Local storage for GNSS records such as coordinates, date, time, HDOP, and signal quality         |
+| Wireless Telemetry   | ESP32-S3 sends GNSS data to a backend server over Wi-Fi using a mobile hotspot                   |
+| FastAPI Backend      | Receives telemetry, stores data, and exposes API endpoints for the frontend                      |
+| Web Frontend         | Provides tools for geocaching, 3D terrain viewing, saved locations, and API documentation        |
+| 3D Printed Enclosure | Custom physical box design for holding the electronics and display                               |
 
 ---
 
 ## Physical Device
 
-The G-Cacher hardware is built around the Tenstar ESP32-S3 development board and an LC29H GNSS receiver.
+The G-Cacher device is built around the Tenstar ESP32-S3 development board and an LC29H GNSS receiver.
 
-The device includes:
+| Component                     | Purpose                                                                    |
+| ----------------------------- | -------------------------------------------------------------------------- |
+| Tenstar ESP32-S3              | Main microcontroller, Wi-Fi telemetry, firmware logic, and display control |
+| LC29H(AA) GNSS Receiver       | Receives satellite positioning data and outputs NMEA strings               |
+| ILI9488 Touch Display         | Shows GNSS readings, menus, status pages, and interaction screens          |
+| SD Card Slot                  | Saves GNSS logs locally for later review or import                         |
+| BMP280 Sensor                 | Measures pressure and temperature                                          |
+| QMI8658C IMU                  | Measures acceleration and rotation                                         |
+| 2000 mAh 3.7 V Li-ion Battery | Rechargeable portable power source                                         |
+| 3D Printed Enclosure          | Holds and protects the device hardware                                     |
 
-| Component                                  | Purpose                                                                |
-| ------------------------------------------ | ---------------------------------------------------------------------- |
-| Tenstar ESP32-S3                           | Main microcontroller, Wi-Fi telemetry, display control, firmware logic |
-| LC29H(AA) GNSS receiver                    | Receives satellite positioning data and outputs NMEA strings           |
-| ILI9488 touch display                      | Displays menus, live GNSS data, signal quality, and device status      |
-| SD card slot                               | Stores GNSS records locally for later analysis                         |
-| BMP280 sensor                              | Measures pressure and temperature                                      |
-| QMI8658C IMU                               | Measures acceleration and rotation                                     |
-| 2000 mAh 3.7 V rechargeable Li-ion battery | Portable power source for field use                                    |
-| 3D printed enclosure                       | Protects and holds the device hardware                                 |
+The battery target is up to approximately 5 hours under heavy use, including display activity, Wi-Fi telemetry, GNSS reception, and SD logging. Actual runtime depends on brightness, refresh rate, wireless activity, and firmware behaviour.
 
-Battery life depends on display brightness, Wi-Fi usage, SD logging, GNSS activity, and firmware behaviour. The current battery target is approximately up to 5 hours under heavy use.
+<p align="center">
+  <img width="430" alt="G-Cacher physical device" src="https://github.com/user-attachments/assets/d02fb363-c22b-4e05-8810-f08625705583" />
+</p>
 
 ---
 
@@ -93,40 +79,38 @@ Battery life depends on display brightness, Wi-Fi usage, SD logging, GNSS activi
 
 The firmware uses a touch-based menu system on the ILI9488 display.
 
-The current device interface is designed around pages such as:
-
-| Menu Page      | Purpose                                                                                                 |
-| -------------- | ------------------------------------------------------------------------------------------------------- |
-| Live GNSS      | Shows parsed latitude, longitude, altitude, speed, HDOP, satellite count, date, and time                |
-| Signal Quality | Displays GNSS quality indicators such as fix status, HDOP, satellite count, and signal strength mapping |
-| NMEA / Logging | Shows raw or parsed GNSS data and supports local SD logging                                             |
-| Saved Location | Allows a location to be recorded and sent to the backend as a saved asset                               |
-| System Status  | Displays hardware status, sensor readings, storage state, and telemetry state                           |
+| Menu Page      | Purpose                                                                                            |
+| -------------- | -------------------------------------------------------------------------------------------------- |
+| Live GNSS      | Displays parsed latitude, longitude, altitude, ground speed, HDOP, satellite count, date, and time |
+| Signal Quality | Maps GNSS reception into simple quality categories such as good, OK, poor, or no fix               |
+| NMEA / Logging | Shows raw or parsed GNSS data and supports SD card logging                                         |
+| Saved Location | Allows the user to record a location and send it to the backend as an asset                        |
+| System Status  | Displays device state, sensors, SD card status, telemetry status, and hardware information         |
 
 ---
 
 ## GNSS and NMEA Data
 
-The LC29H receiver outputs NMEA sentences. NMEA is a standard text-based format used by GNSS receivers to report position, time, satellite, and movement data.
+The LC29H receiver outputs NMEA sentences. NMEA is a text-based format used by GNSS receivers to report position, time, movement, satellite, and signal information.
 
-The receiver can use satellite constellations such as:
+The receiver can use multiple satellite constellations depending on configuration and signal availability:
 
 * GPS
 * GLONASS
 * Galileo
 * BeiDou
-* QZSS, depending on receiver configuration and signal availability
+* QZSS
 
 Common NMEA talker prefixes include:
 
-| Prefix      | Meaning                                              |
-| ----------- | ---------------------------------------------------- |
-| `GP`        | GPS                                                  |
-| `GL`        | GLONASS                                              |
-| `GA`        | Galileo                                              |
-| `GB` / `BD` | BeiDou                                               |
-| `GQ`        | QZSS                                                 |
-| `GN`        | Combined GNSS solution using multiple constellations |
+| Prefix      | Meaning                                    |
+| ----------- | ------------------------------------------ |
+| `GP`        | GPS                                        |
+| `GL`        | GLONASS                                    |
+| `GA`        | Galileo                                    |
+| `GB` / `BD` | BeiDou                                     |
+| `GQ`        | QZSS                                       |
+| `GN`        | Combined multi-constellation GNSS solution |
 
 Example:
 
@@ -134,7 +118,7 @@ Example:
 GNGLL
 ```
 
-This means a GLL sentence generated from a combined multi-constellation GNSS solution.
+This means a `GLL` sentence generated from a combined multi-constellation GNSS solution.
 
 Common NMEA sentence types used or expected in the project include:
 
@@ -146,57 +130,35 @@ Common NMEA sentence types used or expected in the project include:
 | `GSV`    | Satellites in View                  | Satellite IDs, elevation, azimuth, and signal strength         |
 | `RMC`    | Recommended Minimum GNSS Data       | Time, date, position, speed, course, and validity              |
 | `VTG`    | Course Over Ground and Ground Speed | Ground track and speed information                             |
-| `ZDA`    | Time and Date                       | UTC time, day, month, year, and local time zone offset         |
+| `ZDA`    | Time and Date                       | UTC time, day, month, year, and local time offset              |
 | `GST`    | GNSS Pseudorange Error Statistics   | Estimated position error information                           |
 | `GNS`    | GNSS Fix Data                       | Multi-GNSS fix information                                     |
 | `TXT`    | Text Message                        | Receiver status or diagnostic messages                         |
 
-The firmware parses these strings to extract useful fields such as:
-
-* Latitude
-* Longitude
-* Altitude
-* Ground speed
-* Date and time
-* HDOP
-* Satellite count
-* Fix quality
-* Signal quality indicators
+The firmware parses these messages to extract practical field data for display, logging, and telemetry.
 
 ---
 
-## Signal Quality Mapping
+## Signal Quality and Sensor Expansion
 
-The project maps GNSS signal quality into simple categories that are easier to understand during field testing.
+G-Cacher maps GNSS reception into simple quality states so that readings are easier to understand during field testing.
 
-Example categories:
+| Quality | Typical Meaning                                             |
+| ------- | ----------------------------------------------------------- |
+| Good    | Stronger fix, more satellites, and lower HDOP               |
+| OK      | Usable fix, but lower confidence                            |
+| Poor    | Weak signal, fewer satellites, higher HDOP, or unstable fix |
+| No Fix  | Position data is not currently reliable                     |
 
-| Quality | Typical Meaning                                              |
-| ------- | ------------------------------------------------------------ |
-| Good    | Stronger fix, more satellites, lower HDOP                    |
-| OK      | Usable fix but lower confidence                              |
-| Poor    | Weak signal, low satellite count, high HDOP, or unstable fix |
-| No Fix  | Position is not currently reliable                           |
+The ESP32-S3 board also includes onboard sensors such as an IMU and BMP280 pressure sensor. These can be used in future versions for sensor fusion, where GNSS, acceleration, rotation, pressure, and altitude data are combined to improve movement estimation and device awareness.
 
-This makes the device easier to use in real field conditions where raw satellite values may not be immediately meaningful.
-
----
-
-## OSNMA and Signal Integrity
-
-The project explores Galileo OSNMA support where available.
-
-OSNMA stands for Open Service Navigation Message Authentication. It is used by Galileo to authenticate navigation message data. In practical terms, this can help receivers detect certain forms of navigation-message spoofing.
-
-OSNMA does not make the device immune to all GNSS attacks. It does not prevent RF jamming, and it depends on receiver support, satellite visibility, implementation, and correct configuration.
-
-For this project, OSNMA is treated as an additional signal-integrity feature rather than a complete security solution.
+The project also explores Galileo OSNMA where supported. OSNMA can help authenticate Galileo navigation messages and improve resistance to certain spoofing scenarios. It does not prevent RF jamming and should be treated as an additional signal-integrity feature rather than a complete security solution.
 
 ---
 
 ## Local Data Logging
 
-The device includes SD card logging for recording GNSS data during field tests.
+The device can store GNSS data on an SD card for later analysis.
 
 Logged data may include:
 
@@ -209,68 +171,82 @@ Logged data may include:
 * Satellite count
 * Fix quality
 * Signal quality category
-* Saved asset or waypoint information
+* Saved waypoint or asset information
 
-This allows collected GNSS data to be reviewed later, imported into the frontend, or used for mapping and terrain visualisation.
+This allows GNSS points to be reviewed later, imported into the web platform, or used for mapping and terrain visualisation.
 
 ---
 
 ## Web Platform
 
-The web platform provides a frontend dashboard and a FastAPI backend.
+The web platform is used to receive, store, visualise, and manage location data from the G-Cacher device.
 
-The ESP32-S3 connects to a mobile hotspot and sends telemetry to the backend server. The backend stores location records and exposes API endpoints used by the frontend.
+The ESP32-S3 sends telemetry to the backend over Wi-Fi. The backend is built with FastAPI and provides API endpoints for telemetry, saved locations, tracks, points, and asset management. The frontend provides user-facing tools for viewing and interacting with the collected data.
 
-The web application currently includes four main areas:
+<p align="center">
+  <img width="760" alt="SatCacher home page" src="https://github.com/user-attachments/assets/35294646-b04f-4075-a990-ca09a230cc95" />
+</p>
 
-| Feature           | Purpose                                                                    |
-| ----------------- | -------------------------------------------------------------------------- |
-| GeoCache Game     | Uses live device position to guide users toward predefined Irish landmarks |
-| 3D Terrain Viewer | Visualises latitude, longitude, and altitude points in 3D                  |
-| Saved Locations   | Stores and labels saved device locations as assets                         |
-| API Documentation | Shows implemented FastAPI endpoints and request/response models            |
+The web platform currently includes four main areas:
+
+| Feature           | Purpose                                                                     |
+| ----------------- | --------------------------------------------------------------------------- |
+| GeoCache Game     | Uses live or recorded GNSS data to guide a user toward predefined landmarks |
+| 3D Terrain Viewer | Visualises latitude, longitude, and altitude points in 3D                   |
+| Saved Locations   | Stores and manages important saved locations as assets                      |
+| API Documentation | Shows the implemented backend endpoints and request/response models         |
 
 ---
 
 ## GeoCache Game
 
-The GeoCache Game is designed as a tourist-friendly navigation feature.
+The GeoCache Game is designed as a location-based navigation feature for tourists or first-time visitors.
 
-The server stores predefined landmark locations, such as well-known Irish destinations. The G-Cacher device sends its current GNSS position to the backend, and the backend calculates which landmark is closest or which target the user is navigating toward.
+The backend stores predefined landmarks, such as well-known Irish destinations. The G-Cacher device sends its current location to the server. The server compares the user’s movement against the target location and decides whether the user is getting closer or further away.
 
-The system compares the current position with previous movement to decide whether the user is getting closer or further away.
+| Feedback | Meaning                                              |
+| -------- | ---------------------------------------------------- |
+| Red      | The user is getting closer to the target             |
+| Blue     | The user is moving further away from the target      |
+| Yellow   | The user has not moved enough for direction feedback |
 
-Example feedback logic:
+This creates a GNSS-based hot-and-cold game using real location telemetry.
 
-| Device Feedback | Meaning                                              |
-| --------------- | ---------------------------------------------------- |
-| Red             | The user is getting closer to the target             |
-| Blue            | The user is moving further away from the target      |
-| Yellow          | The user has not moved enough for direction feedback |
+<p align="center">
+  <img width="760" alt="GeoCache game" src="https://github.com/user-attachments/assets/05cf1eac-5227-4aa5-a85f-df75aafeabcc" />
+</p>
 
-This creates a hot-and-cold navigation game using real GNSS telemetry.
+<p align="center">
+  <img width="760" alt="Sample waypoint" src="https://github.com/user-attachments/assets/dd6d2024-0da8-4e26-84df-cb277928729b" />
+</p>
 
 ---
 
 ## 3D Terrain Viewer
 
-The 3D Terrain Viewer visualises GNSS points using latitude, longitude, and altitude.
+The 3D Terrain Viewer displays GNSS points using latitude, longitude, and altitude.
 
 It can be used to:
 
-* Plot recorded GNSS survey points
-* Visualise a perimeter or walking path
-* Generate a rough 3D view of a mapped area
-* Compare real recorded points with simulated data
-* View locations such as a campus, field, or test route
+* Plot recorded survey points
+* Visualise a walking path or field test route
+* Build a rough 3D model of a mapped area
+* Compare real recorded data with simulated points
+* View terrain-like data from places such as TUD Tallaght Campus
 
-The viewer can use data from:
+The viewer can use data from the FastAPI database, imported JSON files, or simulated points. Better results are produced when points are collected across the full area rather than only around the perimeter.
 
-* FastAPI backend records
-* Imported JSON files
-* Simulated point data
+<p align="center">
+  <img width="760" alt="3D terrain viewer" src="https://github.com/user-attachments/assets/ae58facb-ceb9-45d1-ad8f-b71f016d5482" />
+</p>
 
-For better terrain results, more points should be collected across the area instead of only recording the perimeter.
+<p align="center">
+  <img width="760" alt="Sample terrain" src="https://github.com/user-attachments/assets/cc376ff5-f4f1-41e6-b9a4-bbdf83a2dcf4" />
+</p>
+
+<p align="center">
+  <img width="760" alt="TUD Tallaght campus terrain" src="https://github.com/user-attachments/assets/ba3be553-182c-4fd5-b9de-3b4d795bf732" />
+</p>
 
 ---
 
@@ -278,9 +254,9 @@ For better terrain results, more points should be collected across the area inst
 
 The Saved Locations feature allows the device to record a location and send it to the backend as an asset.
 
-On the frontend, the user can view the saved location on a Leaflet map and add useful metadata.
+On the frontend, the saved point can be shown on a Leaflet map and given extra information such as a name, category, and description.
 
-Example saved asset categories:
+Example asset categories include:
 
 * Parked car
 * Pipe
@@ -289,45 +265,34 @@ Example saved asset categories:
 * Survey point
 * Other
 
-A saved location can also include:
+This feature is useful for saving important positions that may need to be found again later, such as a parked car, a field marker, or the location of an underground pipe or cable.
 
-* Name
-* Tag
-* Description
-* Latitude
-* Longitude
-* Date and time recorded
+<p align="center">
+  <img width="760" alt="Saved locations page" src="https://github.com/user-attachments/assets/97315fad-9da7-441b-9735-3e7822f29f4b" />
+</p>
 
-This feature is useful for remembering important places or marking objects that may need to be found again later.
-
-Example use cases:
-
-* Saving where a car is parked
-* Marking a buried pipe or cable
-* Recording a survey point
-* Saving a field test location
-* Returning to a point after vegetation or site conditions have changed
+<p align="center">
+  <img width="760" alt="Database contents" src="https://github.com/user-attachments/assets/8bedb7af-100b-4a19-bb15-da6baa52aa40" />
+</p>
 
 ---
 
 ## FastAPI Backend
 
-The backend is built with FastAPI and provides API endpoints for receiving telemetry, storing location data, retrieving records, and supporting frontend features.
-
-The API documentation is available through the FastAPI Swagger interface.
+The backend is built with FastAPI. It receives telemetry from the ESP32-S3 device, stores records, and provides data to the frontend.
 
 Current backend areas include:
 
-| API Area  | Purpose                                                    |
-| --------- | ---------------------------------------------------------- |
-| Health    | Check if the backend is running                            |
-| Telemetry | Receive live GNSS data from the ESP32-S3                   |
-| Locations | Retrieve saved GNSS locations                              |
-| Latest    | Get the latest received telemetry point                    |
-| Log       | View logged telemetry records                              |
-| Points    | Retrieve point data for visualisation                      |
-| Track     | Retrieve movement track data                               |
-| Assets    | Create, update, retrieve, and delete saved location assets |
+| API Area  | Purpose                                                        |
+| --------- | -------------------------------------------------------------- |
+| Health    | Checks if the backend is running                               |
+| Telemetry | Receives live GNSS data from the ESP32-S3                      |
+| Locations | Retrieves saved GNSS locations                                 |
+| Latest    | Gets the latest received telemetry point                       |
+| Log       | Provides access to telemetry log records                       |
+| Points    | Retrieves point data for visualisation                         |
+| Track     | Retrieves movement track data                                  |
+| Assets    | Creates, updates, retrieves, and deletes saved location assets |
 
 ---
 
@@ -347,13 +312,10 @@ Current backend areas include:
 
 ## Repository Structure
 
-A clean project structure is recommended so that firmware, web code, models, and documentation do not become mixed together.
-
 ```text
 G-Cacher/
 ├── firmware/
 │   └── esp32s3/
-│       └── device_firmware/
 ├── web/
 │   ├── frontend/
 │   └── backend/
@@ -364,15 +326,13 @@ G-Cacher/
 └── .gitignore
 ```
 
-Suggested folder responsibilities:
-
-| Folder          | Purpose                                                              |
-| --------------- | -------------------------------------------------------------------- |
-| `firmware/`     | ESP32-S3 firmware and Arduino sketches                               |
-| `web/frontend/` | Frontend website code                                                |
-| `web/backend/`  | FastAPI backend code                                                 |
-| `models/`       | 3D enclosure and box design files                                    |
-| `docs/`         | Technical notes, wiring guides, API notes, and project documentation |
+| Folder          | Purpose                                                          |
+| --------------- | ---------------------------------------------------------------- |
+| `firmware/`     | ESP32-S3 firmware and Arduino sketches                           |
+| `web/frontend/` | Frontend website code                                            |
+| `web/backend/`  | FastAPI backend code                                             |
+| `models/`       | 3D enclosure and box design files                                |
+| `docs/`         | Wiring guides, setup notes, API notes, and project documentation |
 
 ---
 
@@ -384,22 +344,13 @@ The learning portal contains supporting material for GNSS, NMEA, satellite signa
 
 ---
 
-## Members / Contributors
-
-* Andrei-Eduard Rusu
-* Carla Daniela Zegarra Bernabe
-* Niki Mardari
-* Szymon Blazejowski
-
----
-
-## Project Status
+## Current Status
 
 The project currently includes:
 
-* Working ESP32-S3 GNSS device firmware
+* ESP32-S3 GNSS device firmware
 * LC29H GNSS receiver integration
-* Touch display interface
+* ILI9488 touch display interface
 * SD card logging support
 * Wi-Fi telemetry transfer
 * FastAPI backend
@@ -408,61 +359,16 @@ The project currently includes:
 * 3D terrain viewer
 * Saved locations and asset mapping
 * API documentation page
-* Physical device enclosure prototype
+* 3D printed enclosure prototype
 
-Future work may include:
+Future improvements may include:
 
 * Improved enclosure design
 * More complete field testing
 * Improved signal-quality mapping
-* Better frontend styling and workflow
 * Sensor fusion using GNSS, IMU, and barometric readings
 * More robust telemetry error handling
 * Expanded OSNMA testing where supported
-
----
-
-## Gallery
-
-### SatCacher Home Page
-
-<img width="1276" height="710" alt="SatCacher home page" src="https://github.com/user-attachments/assets/35294646-b04f-4075-a990-ca09a230cc95" />
-
-### GeoCache Game
-
-<img width="1276" height="717" alt="GeoCache game" src="https://github.com/user-attachments/assets/05cf1eac-5227-4aa5-a85f-df75aafeabcc" />
-
-### Sample Waypoint
-
-<img width="1276" height="711" alt="Sample waypoint" src="https://github.com/user-attachments/assets/dd6d2024-0da8-4e26-84df-cb277928729b" />
-
-### 3D Terrain Viewer
-
-<img width="1269" height="739" alt="3D terrain viewer" src="https://github.com/user-attachments/assets/ae58facb-ceb9-45d1-ad8f-b71f016d5482" />
-
-### Sample Terrain
-
-<img width="1273" height="714" alt="Sample terrain" src="https://github.com/user-attachments/assets/cc376ff5-f4f1-41e6-b9a4-bbdf83a2dcf4" />
-
-### TUD Tallaght Campus Terrain
-
-<img width="1274" height="714" alt="TUD Tallaght campus terrain" src="https://github.com/user-attachments/assets/ba3be553-182c-4fd5-b9de-3b4d795bf732" />
-
-### Saved Locations
-
-<img width="1276" height="717" alt="Saved locations page" src="https://github.com/user-attachments/assets/97315fad-9da7-441b-9735-3e7822f29f4b" />
-
-### Database Contents
-
-<img width="1278" height="715" alt="Database contents" src="https://github.com/user-attachments/assets/8bedb7af-100b-4a19-bb15-da6baa52aa40" />
-
-### API Documentation
-
-<img width="1278" height="715" alt="SatCacher GNSS API documentation" src="https://github.com/user-attachments/assets/8bedb7af-100b-4a19-bb15-da6baa52aa40" />
-
-### G-Cacher Device
-
-<img width="949" height="1041" alt="G-Cacher physical device" src="https://github.com/user-attachments/assets/d02fb363-c22b-4e05-8810-f08625705583" />
 
 ---
 
