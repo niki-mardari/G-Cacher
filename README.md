@@ -243,7 +243,7 @@ The viewer can use data from the FastAPI database, imported JSON files, or simul
 <p align="center">
   <img width="760" alt="Sample terrain" src="https://github.com/user-attachments/assets/cc376ff5-f4f1-41e6-b9a4-bbdf83a2dcf4" />
 </p>
-
+## TUD Tallaght Campus terrain:
 <p align="center">
   <img width="760" alt="TUD Tallaght campus terrain" src="https://github.com/user-attachments/assets/ba3be553-182c-4fd5-b9de-3b4d795bf732" />
 </p>
