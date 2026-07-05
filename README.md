@@ -189,12 +189,12 @@ On the web dashboard, saved points can be viewed on a map and given extra detail
   <img width="680" alt="Saved locations page" src="https://github.com/user-attachments/assets/97315fad-9da7-441b-9735-3e7822f29f4b" />
 </p>
 
+---
+
 <p align="center">
   <strong>Backend Data Storage</strong><br>
   <img width="680" alt="Database contents" src="https://github.com/user-attachments/assets/8bedb7af-100b-4a19-bb15-da6baa52aa40" />
 </p>
-
----
 
 ## API Documentation
 
