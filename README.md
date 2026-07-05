@@ -19,6 +19,7 @@
 ## Overview
 
 G-Cacher is a student engineering maker project developed for the BIP26 programme. It combines a portable GNSS device with a web platform for collecting, storing, and visualising location data.
+
 ---
 
 ## Contributors
