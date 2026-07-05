@@ -243,7 +243,9 @@ The viewer can use data from the FastAPI database, imported JSON files, or simul
 <p align="center">
   <img width="760" alt="Sample terrain" src="https://github.com/user-attachments/assets/cc376ff5-f4f1-41e6-b9a4-bbdf83a2dcf4" />
 </p>
+
 ## TUD Tallaght Campus terrain:
+
 <p align="center">
   <img width="760" alt="TUD Tallaght campus terrain" src="https://github.com/user-attachments/assets/ba3be553-182c-4fd5-b9de-3b4d795bf732" />
 </p>
@@ -270,6 +272,8 @@ This feature is useful for saving important positions that may need to be found 
 <p align="center">
   <img width="760" alt="Saved locations page" src="https://github.com/user-attachments/assets/97315fad-9da7-441b-9735-3e7822f29f4b" />
 </p>
+
+##Backend Implementation:
 
 <p align="center">
   <img width="760" alt="Database contents" src="https://github.com/user-attachments/assets/8bedb7af-100b-4a19-bb15-da6baa52aa40" />
