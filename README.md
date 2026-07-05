@@ -158,6 +158,7 @@ The wiki contains the more detailed technical documentation for GNSS, NMEA, sens
 
 Future improvements may include:
 
+* Further documentation
 * Sensor Fusion with extended Kalman filtering
 * PCB
 * Improved enclosure
