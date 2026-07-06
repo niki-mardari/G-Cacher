@@ -40,4 +40,4 @@ const char *const ASSETS_URL = "";
 - Adafruit BMP280
 - ArduinoJson
 - QMI8658C `ImuDrv.hpp` driver used by accelerometer can be found here: 
-  lewisxhe LIB](https://github.com/lewisxhe/SensorLib/tree/master/src).
+  [lewisxhe LIB](https://github.com/lewisxhe/SensorLib/tree/master/src).
