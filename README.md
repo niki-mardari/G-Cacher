@@ -14,43 +14,29 @@
   <img src="https://img.shields.io/badge/Web-Dashboard-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
 </p>
 
-<p align="center">
-  <a href="https://youtu.be/IPzuhKJv3FM">
-    <img src="https://img.shields.io/badge/Watch%20Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Demo on YouTube" />
-  </a>
-</p>
-
 ---
 
 ## Overview
 
-G-Cacher is a student engineering project developed during the BIP26 programme. It combines a portable GNSS device with a web platform for collecting, storing, and visualising location data.
-
-The device reads live GNSS data, displays useful positioning information on a touch screen, logs selected data to an SD card, and sends telemetry to a backend server.
-
-The web platform extends the device with a map dashboard, a GeoCache-style navigation game, a 3D terrain viewer, saved locations, and backend API support.
+G-Cacher is a student engineering project developed during the BIP26 programme. The project utilizes a portable GNSS device. A web platform for collecting, storing, and visualising location data.
 
 ---
 
-## What It Currently Does
+## What it currently does:
 
-### Device
+Device:
 
 * Reads live GNSS data from multiple satellite constellations
 * Displays position, altitude, speed, satellite count, HDOP, and signal quality
 * Logs selected GNSS data to an SD card
 * Sends telemetry to a backend server
 
-### Web Platform
+Webserver (Frontend/ Backend):
 
-* Visualises recorded location points on a map
-* Provides a GeoCache-style navigation game
-* Displays latitude, longitude, and altitude points in 3D
-* Saves and displays named locations
-
-<p align="center">
-  <img width="360" alt="G-Cacher prototype" src="docs/images/Prototype.jpg" />
-</p>
+* Visualises recorded location points in a web dashboard on a map
+* A GeoCache-style navigation game
+* Display recorded latitude, longitude, and altitude points in 3D
+* Saves and displays saved locations
 
 ---
 
@@ -60,28 +46,19 @@ The device uses a touch-based menu system for viewing live data and interacting 
 
 The main device menus include:
 
-* **Live GNSS** — displays parsed position, altitude, speed, HDOP, satellite count, date, and time.
-* **Signal Quality** — shows whether the current GNSS signal is good, usable, weak, or unavailable.
-* **NMEA / Logging** — supports viewing GNSS data and saving records to SD card.
-* **Saved Location** — records a location and sends it to the backend as a saved asset.
-* **System Status** — shows device, sensor, SD card, and telemetry status.
-
-<p align="center">
-  <strong>Device UI</strong><br>
-  <img width="520" alt="G-Cacher device UI screen 1" src="docs/images/G-Cacher_UI_1.jpg" />
-</p>
-
-<p align="center">
-  <img width="520" alt="G-Cacher device UI screen 2" src="docs/images/G-Cacher_UI_2.jpg" />
-</p>
+* Live GNSS — displays parsed position, altitude, speed, HDOP, satellite count, date, and time.
+* Signal Quality — shows whether the current GNSS signal is good, usable, weak, or unavailable.
+* NMEA / Logging — supports viewing GNSS data and saving records to SD card.
+* Saved Location — records a location and sends it to the backend as a saved asset.
+* System Status — shows device, sensor, SD card, and telemetry status.
 
 ---
 
 ## Web Platform
 
-The web platform receives telemetry from the G-Cacher device and provides a simple interface for interacting with collected location data.
+The web platform receives telemetry from the G-Cacher device and provides a simple interface for interacting with the collected location data.
 
-It includes a frontend website and a FastAPI backend. The backend receives device telemetry, stores records, and provides endpoints for the frontend. The frontend allows users to view location data, play the GeoCache game, inspect saved assets, and visualise terrain points. Deploy easily with Docker.
+It includes a frontend website and a FastAPI backend. The backend receives device telemetry, stores records, and provides endpoints for the frontend. The frontend allows users to view location data, play the GeoCache game, inspect saved assets, and visualise terrain points.
 
 <p align="center">
   <strong>SatCacher Home Page</strong><br>
@@ -108,13 +85,8 @@ The device can then give simple direction feedback:
 </p>
 
 <p align="center">
-  <strong>GeoCache Waypoint View</strong><br>
-  <img width="680" alt="GeoCache waypoint view" src="docs/images/1_GeoCacheGame.jpg" />
-</p>
-
-<p align="center">
-  <strong>GeoCache Result View</strong><br>
-  <img width="680" alt="GeoCache result view" src="docs/images/3_GeoCacheGame.jpg" />
+  <strong>Sample Waypoint</strong><br>
+  <img width="680" alt="Sample waypoint" src="docs/images/3_GeoCacheGame.jpg" />
 </p>
 
 ---
@@ -127,7 +99,7 @@ It can be used to visualise walking routes, field test data, campus areas, and r
 
 <p align="center">
   <strong>3D Terrain Viewer</strong><br>
-  <img width="680" alt="3D terrain viewer simulated data" src="docs/images/1_3D_Viewer_Simulated.png" />
+  <img width="680" alt="3D terrain viewer" src="docs/images/1_3D_Viewer_Simulated.png" />
 </p>
 
 <p align="center">
@@ -152,6 +124,8 @@ On the web dashboard, saved points can be viewed on a map and given extra detail
   <strong>Saved Locations</strong><br>
   <img width="680" alt="Saved locations page" src="docs/images/Saved_Locations.png" />
 </p>
+
+---
 
 ---
 
@@ -182,8 +156,8 @@ The wiki contains the more detailed technical documentation for GNSS, NMEA, sens
 Future improvements may include:
 
 * Further documentation
-* Sensor fusion with extended Kalman filtering
-* Custom PCB
+* Sensor Fusion with extended Kalman filtering
+* PCB
 * Improved enclosure
 
 ---
@@ -194,6 +168,16 @@ Future improvements may include:
 * Carla Daniela Zegarra Bernabe
 * Niki Mardari
 * Szymon Blazejowski
+
+---
+
+A short demonstration video showing the G-Cacher project in use:
+
+<p align="left">
+  <a href="https://youtu.be/IPzuhKJv3FM">
+    <img src="https://img.shields.io/badge/Watch%20on%20YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Demo" />
+  </a>
+</p>
 
 ---
 
