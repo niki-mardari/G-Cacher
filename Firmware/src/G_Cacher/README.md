@@ -40,4 +40,4 @@ const char *const ASSETS_URL = "";
 - Adafruit BMP280
 - ArduinoJson
 - QMI8658C `ImuDrv.hpp` driver used by accelerometer can be found here: 
-[![Lib](https://img.shields.io/badge/Manual-Purple?style=for-the-badge&logo=readthedocs&logoColor=white&color=1E90FF)]([https://www.waveshare.com/wiki/LC29H%28XX%29_GPS/RTK_HAT](https://github.com/lewisxhe/SensorLib/tree/master/src))
+[![Lib](https://img.shields.io/badge/Lib-Purple?style=for-the-badge&logo=readthedocs&logoColor=white&color=1E90FF)]([https://www.waveshare.com/wiki/LC29H%28XX%29_GPS/RTK_HAT](https://github.com/lewisxhe/SensorLib/tree/master/src))
