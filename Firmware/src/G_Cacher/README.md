@@ -1,16 +1,6 @@
 # GNSS Sat Cacher Firmware so far
 
-Clean modular Arduino firmware for the Tenstar ESP32-S3 GNSS Sat Cacher project.
-
-## Main changes from the single-file sketch
-
-- Split the firmware into small files by responsibility.
-- Removed `handleSerialInput()` because the handheld device should use touch and the boot button.
-- Kept Wi-Fi/server credentials as blank placeholders in `src/Config.h`.
-- Added slower Wi-Fi/server retry backoff so a bad connection does not constantly interrupt the touch UI.
-- Reduced display flicker by redrawing the full screen only when changing page.
-- Live screen values use cached field updates, so a field is only cleared and redrawn when its text or colour changes.
-- Backend `beep` now triggers one short target-reached melody once instead of repeatedly buzzing while the server keeps returning `beep: true`.
+Clean modular Arduino firmware for the Tenstar ESP32-S3 GNSS G Cacher project
 
 ## Files
 
@@ -43,16 +33,11 @@ const char *const TELEMETRY_URL = "";
 const char *const ASSETS_URL = "";
 ```
 
-The zip deliberately leaves these blank.
-
 ## Required libraries
 
 - LovyanGFX
 - TinyGPSPlus
 - Adafruit BMP280
 - ArduinoJson
-- The same QMI8658C `ImuDrv.hpp` driver used by your current sketch
-
-## Notes
-
-This was reorganised from the uploaded single-file project sketch. It has not been hardware-compiled in this environment because the Arduino ESP32 board package and your local sensor/display libraries are not installed here.
+- QMI8658C `ImuDrv.hpp` driver used by accelerometer can be found here: 
+[![Lib](https://img.shields.io/badge/Manual-Purple?style=for-the-badge&logo=readthedocs&logoColor=white&color=1E90FF)]([https://www.waveshare.com/wiki/LC29H%28XX%29_GPS/RTK_HAT](https://github.com/lewisxhe/SensorLib/tree/master/src))
