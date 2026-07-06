@@ -62,7 +62,7 @@ The main device menus include:
 
 The web platform receives telemetry from the G-Cacher device and provides a simple interface for interacting with the collected location data.
 
-It includes a frontend website and a FastAPI backend. The backend receives device telemetry, stores records, and provides endpoints for the frontend. The frontend allows users to view location data, play the GeoCache game, inspect saved assets, and visualise terrain points.
+It includes a frontend website and a FastAPI backend. The backend receives device telemetry, stores records, and provides endpoints for the frontend. The frontend allows users to view location data, play the GeoCache game, inspect saved assets, and visualise terrain points. Deploy easily with Docker.
 
 <p align="center">
   <strong>SatCacher Home Page</strong><br>
