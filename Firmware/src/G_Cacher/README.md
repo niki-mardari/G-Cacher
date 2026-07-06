@@ -1,4 +1,4 @@
-# GNSS Sat Cacher Clean Firmware
+# GNSS Sat Cacher Firmware so far
 
 Clean modular Arduino firmware for the Tenstar ESP32-S3 GNSS Sat Cacher project.
 
