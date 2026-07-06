@@ -40,10 +40,6 @@ Webserver (Frontend/ Backend):
 
 ---
 
-<p align="center">
-  <img width="360" alt="G-Cacher Interface" src="docs/images/G-Cacher_UI_1.jpg" />
-</p>
-
 ## Device Interface
 
 The device uses a touch-based menu system for viewing live data and interacting with the project features.
@@ -55,6 +51,11 @@ The main device menus include:
 * NMEA / Logging — supports viewing GNSS data and saving records to SD card.
 * Saved Location — records a location and sends it to the backend as a saved asset.
 * System Status — shows device, sensor, SD card, and telemetry status.
+
+
+<p align="center">
+  <img width="360" alt="G-Cacher Interface" src="docs/images/G-Cacher_UI_1.jpg" />
+</p>
 
 ---
 
