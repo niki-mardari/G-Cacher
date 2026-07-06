@@ -146,6 +146,11 @@ On the web dashboard, saved points can be viewed on a map and given extra detail
 [![Manual](https://img.shields.io/badge/Manual-Blue?style=for-the-badge\&logo=readthedocs\&logoColor=white\&color=1E90FF)](https://www.waveshare.com/wiki/LC29H%28XX%29_GPS/RTK_HAT)
 [![Purchase](https://img.shields.io/badge/Purchase-Green?style=for-the-badge\&logo=aliexpress\&logoColor=white\&color=2EA44F)](https://www.aliexpress.com/item/1005006000498473.html)
 
+### ILI9488 4.0 Inch
+
+[![Manual](https://img.shields.io/badge/Manual-Blue?style=for-the-badge\&logo=readthedocs\&logoColor=white\&color=1E90FF)]([https://www.waveshare.com/wiki/LC29H%28XX%29_GPS/RTK_HAT](https://www.alldatasheet.com/datasheet-pdf/view/1131840/ETC1/ILI9488.html))
+[![Purchase](https://img.shields.io/badge/Purchase-Green?style=for-the-badge\&logo=aliexpress\&logoColor=white\&color=2EA44F)]([https://www.aliexpress.com/item/1005006000498473.html](https://www.aliexpress.com/item/33015586094.html?spm=a2g0o.productlist.main.5.9167O43jO43j73&algo_pvid=4c54fe76-3629-448a-a4d0-af20e68f0ce4&algo_exp_id=4c54fe76-3629-448a-a4d0-af20e68f0ce4-4&pdp_ext_f=%7B%22order%22%3A%225316%22%2C%22spu_best_type%22%3A%22price%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21EUR%213.60%212.70%21%21%214.02%213.01%21%402103867617833568744076957ebefb%2112000026583382487%21sea%21IE%21795942468%21X%211%210%21n_tag%3A-29919%3Bd%3A36afb751%3Bm03_new_user%3A-29895&curPageLogUid=UVYXFWvddzzz&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A33015586094%7C_p_origin_prod%3A))
+
 ---
 
 ## Learning Portal / Wiki
