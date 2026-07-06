@@ -81,12 +81,12 @@ The device can then give simple direction feedback:
 
 <p align="center">
   <strong>GeoCache Game</strong><br>
-  <img width="680" alt="GeoCache game" src="docs/images/2_GeoCacheGame.png" />
+  <img width="680" alt="GeoCache game" src="docs/images/GeoCacheGame.png" />
 </p>
 
 <p align="center">
   <strong>Sample Waypoint</strong><br>
-  <img width="680" alt="Sample waypoint" src="docs/images/3_GeoCacheGame.jpg" />
+  <img width="680" alt="Sample waypoint" src="docs/images/GeoCacheGame2.jpg" />
 </p>
 
 ---
