@@ -8,12 +8,12 @@
 // Keep private details out of the source file.
 // Fill these in locally before flashing, or later replace this with SD/NVS settings.
 
-const char *const WIFI_SSID = "yep";        // Put your Wi-Fi SSID here
-const char *const WIFI_PASSWORD = "12345678";    // Put your Wi-Fi password here
+const char *const WIFI_SSID = "";        // Put your Wi-Fi SSID here
+const char *const WIFI_PASSWORD = "";    // Put your Wi-Fi password here
 
-const char *const SERVER_HOST = "172.26.139.42";      // Example: "192.168.1.50" or "my-server.local"
-const char *const TELEMETRY_URL = "http://172.26.139.42:8000/api/telemetry";    // Example: "http://192.168.1.50:8000/api/telemetry"
-const char *const ASSETS_URL = "http://172.26.139.42:8000/api/assets";       // Example: "http://192.168.1.50:8000/api/assets"
+const char *const SERVER_HOST = "";      // Example: "192.168.1.50" or "my-server.local"
+const char *const TELEMETRY_URL = "";    // Example: "http://192.168.1.50:8000/api/telemetry"
+const char *const ASSETS_URL = "";       // Example: "http://192.168.1.50:8000/api/assets"
 
 const char *const DEVICE_ID = "tenstar_001";
 
