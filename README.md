@@ -99,7 +99,7 @@ It can be used to visualise walking routes, field test data, campus areas, and r
 
 <p align="center">
   <strong>3D Terrain Viewer</strong><br>
-  <img width="680" alt="3D terrain viewer" src="docs/images/1_3D_Viewer_Simulated.png" />
+  <img width="680" alt="3D terrain viewer" src="docs/images/1_3D_Viwer_Simulated.png" />
 </p>
 
 <p align="center">
