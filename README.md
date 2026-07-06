@@ -40,6 +40,10 @@ Webserver (Frontend/ Backend):
 
 ---
 
+<p align="center">
+  <img width="360" alt="G-Cacher Interface" src="docs/images/G-Cacher_UI_1.jpg" />
+</p>
+
 ## Device Interface
 
 The device uses a touch-based menu system for viewing live data and interacting with the project features.
