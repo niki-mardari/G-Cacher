@@ -103,12 +103,12 @@ The 3D Terrain Viewer displays recorded or simulated GNSS points using latitude,
 It can be used to visualise walking routes, field test data, campus areas, and rough terrain-like surfaces. Points can come from the FastAPI database, imported JSON files, or simulated data.
 
 <p align="center">
-  <strong>3D Terrain Viewer</strong><br>
+  <strong>Ideal Sample Terrain 1</strong><br>
   <img width="680" alt="3D terrain viewer" src="docs/images/1_3D_Viwer_Simulated.png" />
 </p>
 
 <p align="center">
-  <strong>Sample Terrain</strong><br>
+  <strong>Ideal Sample Terrain 2</strong><br>
   <img width="680" alt="Sample terrain" src="docs/images/2_3D_Viewer_Simulated.png" />
 </p>
 
