@@ -179,15 +179,6 @@ Future improvements may include:
 * Szymon Blazejowski
 
 ---
-
-A short demonstration video showing the G-Cacher project in use:
-
-<p align="left">
-  <a href="https://youtu.be/IPzuhKJv3FM">
-    <img src="https://img.shields.io/badge/Watch%20on%20YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Demo" />
-  </a>
-</p>
-
 ---
 
 ## Notes
