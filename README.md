@@ -166,7 +166,7 @@ Future improvements may include:
 
 * Further documentation
 * Sensor Fusion with extended Kalman filtering
-* PCB
+* PCB (Work in progress)
 * Improved enclosure
 
 ---
