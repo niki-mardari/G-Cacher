@@ -67,6 +67,33 @@ float gnssHdop()
   return 99.99f;
 }
 
+// Helper for Date Time fomratting 
+String twoDigits(int value)
+{
+  if (value < 10) return "0" + String(value);
+  return String(value);
+}
+
+// Parsing Time: Hours, minutes, seconds UTC
+String gnssTimeText()
+{
+  if (!gps.time.isValid()) return "--:--:--";
+
+  return twoDigits(gps.time.hour()) + ":" +
+         twoDigits(gps.time.minute());
+         //twoDigits(gps.time.second()) + " UTC"; // Has delay
+}
+
+// Parsing Date day, month, year
+String gnssDateText()
+{
+  if (!gps.date.isValid()) return "--/--/----";
+
+  return twoDigits(gps.date.day()) + "/" +
+         twoDigits(gps.date.month()) + "/" +
+         String(gps.date.year());
+}
+
 const char *qualityText(const AppState &app)
 {
   if (!gnssReceiving(app)) return "NO DATA";

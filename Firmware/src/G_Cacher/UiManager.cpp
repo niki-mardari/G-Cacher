@@ -185,32 +185,50 @@ static void updateHomeValues(AppState &app)
 
 static void drawLiveGnssMenu(AppState &app)
 {
+  (void)app;
+
   drawHeader("LIVE GNSS");
-  drawLabel(20, 72, "Fix:");
-  drawLabel(20, 108, "Lat:");
-  drawLabel(20, 144, "Lon:");
-  drawLabel(20, 180, "Alt:");
-  drawLabel(20, 216, "Speed:");
-  drawLabel(20, 252, "Sats:");
-  drawLabel(20, 288, "HDOP:");
+
+  constexpr int LABEL_X = 20;
+  constexpr int START_Y = 64;
+  constexpr int ROW_GAP = 31;
+
+  drawLabel(LABEL_X, START_Y + ROW_GAP * 0, "Fix:");
+  drawLabel(LABEL_X, START_Y + ROW_GAP * 1, "Lat:");
+  drawLabel(LABEL_X, START_Y + ROW_GAP * 2, "Lon:");
+  drawLabel(LABEL_X, START_Y + ROW_GAP * 3, "Alt:");
+  drawLabel(LABEL_X, START_Y + ROW_GAP * 4, "Speed:");
+  drawLabel(LABEL_X, START_Y + ROW_GAP * 5, "Sats:");
+  drawLabel(LABEL_X, START_Y + ROW_GAP * 6, "HDOP:");
+  drawLabel(LABEL_X, START_Y + ROW_GAP * 7, "Time:");
+  drawLabel(LABEL_X, START_Y + ROW_GAP * 8, "Date:");
 
   tft.setTextSize(1);
   tft.setTextColor(TFT_CYAN, TFT_BLACK);
-  tft.setCursor(20, 334);
+  tft.setCursor(20, 344);
   tft.print("Last raw NMEA:");
 }
 
 static void updateLiveGnssValues(AppState &app)
-{
-  drawCachedText(2, 112, 72, 190, 24, gnssHasFix(app) ? "YES" : "NO",
-                 gnssHasFix(app) ? TFT_GREEN : TFT_RED, 2);
-  drawCachedText(3, 112, 108, 190, 24, fixedFloat(gps.location.isValid(), gps.location.lat(), 6), TFT_WHITE, 2);
-  drawCachedText(4, 112, 144, 190, 24, fixedFloat(gps.location.isValid(), gps.location.lng(), 6), TFT_WHITE, 2);
-  drawCachedText(5, 112, 180, 190, 24, fixedFloat(gps.altitude.isValid(), gps.altitude.meters(), 1, "m"), TFT_WHITE, 2);
-  drawCachedText(6, 112, 216, 190, 24, fixedFloat(gps.speed.isValid(), gps.speed.kmph(), 1, "km/h"), TFT_WHITE, 2);
-  drawCachedText(7, 112, 252, 190, 24, String(gnssSatellites()) + " visible", TFT_WHITE, 2);
-  drawCachedText(8, 112, 288, 190, 24, fixedFloat(gps.hdop.isValid(), gnssHdop(), 2), TFT_WHITE, 2);
-  drawCachedText(9, 20, 352, 284, 48, limitText(app.lastNmeaLine, 72), TFT_YELLOW, 1);
+{ 
+  // Spacing
+  constexpr int VALUE_X = 112;
+  constexpr int START_Y = 64;
+  constexpr int ROW_GAP = 31;
+  constexpr int VALUE_W = 190;
+  constexpr int VALUE_H = 22;
+
+  drawCachedText(2, VALUE_X, START_Y + ROW_GAP * 0, VALUE_W, VALUE_H, gnssHasFix(app) ? "YES" : "NO", gnssHasFix(app) ? TFT_GREEN : TFT_RED, 2);
+  drawCachedText(3, VALUE_X, START_Y + ROW_GAP * 1, VALUE_W, VALUE_H, fixedFloat(gps.location.isValid(), gps.location.lat(), 6), TFT_WHITE, 2);
+  drawCachedText(4, VALUE_X, START_Y + ROW_GAP * 2, VALUE_W, VALUE_H, fixedFloat(gps.location.isValid(), gps.location.lng(), 6), TFT_WHITE, 2);
+  drawCachedText(5, VALUE_X, START_Y + ROW_GAP * 3, VALUE_W, VALUE_H, fixedFloat(gps.altitude.isValid(), gps.altitude.meters(), 1, "m"), TFT_WHITE, 2);
+  drawCachedText(6, VALUE_X, START_Y + ROW_GAP * 4, VALUE_W, VALUE_H, fixedFloat(gps.speed.isValid(), gps.speed.kmph(), 1, "km/h"), TFT_WHITE, 2);
+  drawCachedText(7, VALUE_X, START_Y + ROW_GAP * 5, VALUE_W, VALUE_H, String(gnssSatellites()) + " visible", TFT_WHITE, 2);
+  drawCachedText(8, VALUE_X, START_Y + ROW_GAP * 6, VALUE_W, VALUE_H, fixedFloat(gps.hdop.isValid(), gnssHdop(), 2), TFT_WHITE, 2);
+  drawCachedText(9, VALUE_X, START_Y + ROW_GAP * 7, VALUE_W, VALUE_H, gnssTimeText(), TFT_WHITE, 2);
+  drawCachedText(10, VALUE_X, START_Y + ROW_GAP * 8, VALUE_W, VALUE_H, gnssDateText(), TFT_WHITE, 2);
+
+  drawCachedText(11, 20, 360, 284, 48, limitText(app.lastNmeaLine, 46), TFT_YELLOW, 1);
 }
 
 static void drawSignalQualityMenu(AppState &app)
