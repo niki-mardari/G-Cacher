@@ -189,14 +189,15 @@ def init_db():
             )
 
             seed_locations = [
-                ("TU Dublin Tallaght", "Local SatCacher testing point near the Tallaght campus.", 53.2911, -6.3630, 35, 1),
-                ("Trinity College Dublin", "Ireland's oldest university and home to the Book of Kells.", 53.3438, -6.2546, 30, 2),
-                ("Dublin Castle", "Historic castle and former centre of British administration in Ireland.", 53.3429, -6.2674, 30, 3),
-                ("St Patrick's Cathedral", "Large national cathedral in Dublin linked with Jonathan Swift.", 53.3395, -6.2716, 30, 4),
-                ("The Spire", "Tall stainless steel monument on O'Connell Street in Dublin.", 53.3498, -6.2603, 30, 5),
-                ("Newgrange", "Prehistoric passage tomb in County Meath.", 53.6947, -6.4755, 60, 6),
-                ("Rock of Cashel", "Historic limestone site in County Tipperary.", 52.5200, -7.8900, 60, 7),
-                ("Cliffs of Moher", "Famous Atlantic sea cliffs in County Clare.", 52.9715, -9.4309, 80, 8),
+            ("TU Dublin Tallaght", "Local SatCacher testing point near the Tallaght campus.", 53.2911, -6.3630, 35, 1),
+            ("Trinity College Dublin", "Ireland's oldest university and home to the Book of Kells.", 53.3438, -6.2546, 30, 2),
+            ("Dublin Castle", "Historic castle and former centre of British administration in Ireland.", 53.3429, -6.2674, 30, 3),
+            ("St Patrick's Cathedral", "Large national cathedral in Dublin linked with Jonathan Swift.", 53.3395, -6.2716, 30, 4),
+            ("The Spire", "Tall stainless steel monument on O'Connell Street in Dublin.", 53.3498, -6.2603, 30, 5),
+            ("Newgrange", "Prehistoric passage tomb in County Meath.", 53.6947, -6.4755, 60, 6),
+            ("Rock of Cashel", "Historic limestone site in County Tipperary.", 52.5200, -7.8900, 60, 7),
+            ("Cliffs of Moher", "Famous Atlantic sea cliffs in County Clare.", 52.9715, -9.4309, 80, 8),
+            ("Famous Rugby Club", "Rugby club in Meath.", 53.5118, -6.3791, 35, 9),
             ]
             for name, hint, lat, lon, radius_m, order in seed_locations:
                 cur.execute("SELECT id FROM game_locations WHERE name = %s LIMIT 1;", (name,))
