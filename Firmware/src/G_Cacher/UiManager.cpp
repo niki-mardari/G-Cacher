@@ -218,11 +218,19 @@ static void updateLiveGnssValues(AppState &app)
   constexpr int VALUE_W = 190;
   constexpr int VALUE_H = 22;
 
+  // Ignore speeds less than 1Km/h
+  bool speedValid = gnssHasFix(app) && gps.speed.isValid() && gps.speed.age() < 5000;
+  float displaySpeedKmph = speedValid ? gps.speed.kmph() : 0.0f;
+  if (displaySpeedKmph < 1.0f)
+  {
+    displaySpeedKmph = 0.0f;
+  }
+
   drawCachedText(2, VALUE_X, START_Y + ROW_GAP * 0, VALUE_W, VALUE_H, gnssHasFix(app) ? "YES" : "NO", gnssHasFix(app) ? TFT_GREEN : TFT_RED, 2);
   drawCachedText(3, VALUE_X, START_Y + ROW_GAP * 1, VALUE_W, VALUE_H, fixedFloat(gps.location.isValid(), gps.location.lat(), 6), TFT_WHITE, 2);
   drawCachedText(4, VALUE_X, START_Y + ROW_GAP * 2, VALUE_W, VALUE_H, fixedFloat(gps.location.isValid(), gps.location.lng(), 6), TFT_WHITE, 2);
   drawCachedText(5, VALUE_X, START_Y + ROW_GAP * 3, VALUE_W, VALUE_H, fixedFloat(gps.altitude.isValid(), gps.altitude.meters(), 1, "m"), TFT_WHITE, 2);
-  drawCachedText(6, VALUE_X, START_Y + ROW_GAP * 4, VALUE_W, VALUE_H, fixedFloat(gps.speed.isValid(), gps.speed.kmph(), 1, "km/h"), TFT_WHITE, 2);
+  drawCachedText(6, VALUE_X, START_Y + ROW_GAP * 4, VALUE_W, VALUE_H, fixedFloat(speedValid, displaySpeedKmph, 1, "km/h"), TFT_WHITE, 2);
   drawCachedText(7, VALUE_X, START_Y + ROW_GAP * 5, VALUE_W, VALUE_H, String(gnssSatellites()) + " visible", TFT_WHITE, 2);
   drawCachedText(8, VALUE_X, START_Y + ROW_GAP * 6, VALUE_W, VALUE_H, fixedFloat(gps.hdop.isValid(), gnssHdop(), 2), TFT_WHITE, 2);
   drawCachedText(9, VALUE_X, START_Y + ROW_GAP * 7, VALUE_W, VALUE_H, gnssTimeText(), TFT_WHITE, 2);

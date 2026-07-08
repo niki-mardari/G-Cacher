@@ -1,13 +1,25 @@
 /********************************************************
-  GNSS Sat Cacher - Clean Modular Firmware
+  GNSS Sat Cacher Firmware
+  Last changed: 08/07/2026
+
+  Hardware:
   Tenstar ESP32-S3 + LC29H GNSS + ILI9488/XPT2046 + SD + Backend
 
-  Current focus:
-  - Same core project features as the original sketch
+  What is done:
   - Cleaner file structure
   - Less screen flicker by updating only changed fields
   - Less network blocking by using slower retry/backoff timing
   - No hardcoded private Wi-Fi/server details
+
+  Current issues: 
+  - GNSS SOG (Speed over ground) unstable when device is still. 
+  Happens due to GNSS noise and signal bouncing. 
+  Need Kalman Filtering and sensor Fusion implementation with the QMI8658C for short term correction and GNSS for long term correction
+  A simpler solution would be to ignore values lower than 1Km when displayed in UiManager currently implemented
+  - Time Seconds delay, seconds don't update quicly enough/ not at the same pace. UI updates may be too heavy, Possibly implement internal timer for calculating seconds or
+  move date time to home screen where not much gets updated. 
+  
+  
 ********************************************************/
 
 #define LGFX_USE_V1
