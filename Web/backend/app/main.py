@@ -197,8 +197,9 @@ def init_db():
             ("Newgrange", "Prehistoric passage tomb in County Meath.", 53.6947, -6.4755, 60, 6),
             ("Rock of Cashel", "Historic limestone site in County Tipperary.", 52.5200, -7.8900, 60, 7),
             ("Cliffs of Moher", "Famous Atlantic sea cliffs in County Clare.", 52.9715, -9.4309, 80, 8),
-            ("Famous Rugby Club", "Rugby club in Meath.", 53.5118, -6.3791, 35, 9),
+            ("TUD Blanchardstown", "Best University in Blanchardstown.", 53.4055, -6.3786, 35, 9),
             ]
+            
             for name, hint, lat, lon, radius_m, order in seed_locations:
                 cur.execute("SELECT id FROM game_locations WHERE name = %s LIMIT 1;", (name,))
                 if cur.fetchone() is None:
