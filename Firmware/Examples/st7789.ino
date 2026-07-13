@@ -1,15 +1,10 @@
-// ST7789 Dsiplay Testing on Tenstar Esp32S3 
+// ST7789 Display Testing on Tenstar ESP32-S3
 
 #include <Arduino.h>
-#include <Wire.h>
 #include <SPI.h>
 
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7789.h>
-#include <Adafruit_BMP280.h>
-
-#include "ImuDrv.hpp"   // Newer SensorLib QMI8658 driver
-// Donwload here: https://github.com/lewisxhe/SensorLib/tree/master
 
 // -------------------- TFT DISPLAY PINS --------------------
 
@@ -24,43 +19,60 @@
 #define SPI_MISO  37
 #define SPI_MOSI  35
 
-// Adafruit Object for using methods 
 Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
 
 #define PURPLE 0x780F
 
-void startDisplay(){
-  pinMode(TFT_BACKLIGHT, HIGH);
+void startDisplay() {
+  Serial.println("Starting display...");
+
+  pinMode(TFT_BACKLIGHT, OUTPUT);
+  digitalWrite(TFT_BACKLIGHT, HIGH);
+
+  SPI.begin(SPI_SCK, SPI_MISO, SPI_MOSI, TFT_CS);
 
   tft.init(135, 240);
   tft.setRotation(3);
+
   tft.fillScreen(ST77XX_BLACK);
   tft.setTextColor(ST77XX_WHITE);
-  tft.setTextSize(5);
+  tft.setTextSize(2);
+
   Serial.println("Display started");
 }
 
-void drawName(){
+void drawName() {
   tft.fillScreen(ST77XX_BLACK);
+
   tft.setTextColor(PURPLE);
-  char* name = "Niki";
-  tft.setCursor(120, 67);
+  tft.setTextSize(5);
+
+  const char *name = "G-Cacher";
+
+  // For 135x240 display with rotation 3:
+  // screen becomes 240 wide x 135 height.
+  tft.setCursor(0, 50);
   tft.print(name);
 }
 
-void setup(){
+void setup() {
   Serial.begin(115200);
   delay(1500);
-  Serial.println("Esp Serial Ok");
+
+  Serial.println("ESP Serial OK");
 
   startDisplay();
 
   tft.setCursor(0, 0);
+  tft.setTextSize(2);
+  tft.setTextColor(ST77XX_WHITE);
   tft.println("Starting");
+
+  delay(1000);
+
+  drawName();
 }
 
 void loop() {
-
-  startDisplay();
-  drawName();
+  // Nothing here :)
 }
