@@ -158,7 +158,7 @@ On the web dashboard, saved points can be viewed on a map and given extra detail
 
 The wiki contains the more detailed technical documentation for GNSS, NMEA, sensors, wiring, software setup, and project development.
 
-[![Architecture Diagram](https://img.shields.io/badge/ARCHITECTURE%DIAGRAM-39C5BB?style=for-the-badge\&labelColor=7F00FF\&logo=githubpages\&logoColor=white)]([https://coolsphere.github.io/GNSS_Satellite/](https://gitdiagram.com/niki-mardari/g-cacher))
+[![Architecture Diagram](https://img.shields.io/badge/LEARN%20MORE-GNSS%20Learning%20Portal-39C5BB-39C5BB?style=for-the-badge\&labelColor=7F00FF\&logo=githubpages\&logoColor=white)]([https://coolsphere.github.io/GNSS_Satellite/](https://gitdiagram.com/niki-mardari/g-cacher))
 
 ---
 
